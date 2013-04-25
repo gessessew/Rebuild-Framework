@@ -29,6 +29,11 @@ namespace Rebuild.Extensions
             return value.AddDays(-value.Day + 1);
         }
 
+        public static DateTime FirstDayOfYear(this DateTime value)
+        {
+            return new DateTime(value.Year, 1, 1);
+        }
+
         public static DateTime FloorToYears(this DateTime date)
         {
             return new DateTime(date.Year, 1, 1);
@@ -74,6 +79,11 @@ namespace Rebuild.Extensions
             return value.AddDays(-value.Day).AddMonths(1);
         }
 
+        public static DateTime LastDayOfYear(this DateTime value)
+        {
+            return new DateTime(value.Year, 12, 31);
+        }
+
         public static DateTime NextDay(this DateTime value, DayOfWeek dayOfWeek)
         {
             var v = (int)value.DayOfWeek - (int)dayOfWeek;
@@ -84,6 +94,17 @@ namespace Rebuild.Extensions
         {
             var v = (int)dayOfWeek - (int)value.DayOfWeek;
             return value.AddDays(v >= 0 ? v - 7 : v);
+        }
+
+        public static int WeekNumber(this DateTime value, bool excludeLastYear = true, DayOfWeek startWeekDay = DayOfWeek.Sunday)
+        {
+            var d = value.FirstDayOfYear();
+            excludeLastYear &= d.DayOfWeek != startWeekDay;
+
+            if (d.DayOfWeek != startWeekDay)
+                d = d.PreviousDay(startWeekDay);
+
+            return (int)((value.Date - d).TotalDays / 7) + (excludeLastYear ? 1 : 0);
         }
     }
 }

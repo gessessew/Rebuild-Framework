@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace Rebuild.Extensions
 {
@@ -68,6 +69,16 @@ namespace Rebuild.Extensions
         public static string Substr(this string s, int startIndex, int endIndex)
         {
             return s.Substring(startIndex, endIndex - startIndex);
+        }
+
+        public static byte[] ToBytes(this string s, Encoding encoding = null)
+        {
+            return (encoding ?? Encoding.UTF8).GetBytes(s);
+        }
+
+        public static byte[] ToBase64Bytes(this string s)
+        {
+            return Convert.FromBase64String(s);
         }
 
         public static DateTime ToDateTime(this string s, DateTime defaultValue = default(DateTime), IFormatProvider provider = null, DateTimeStyles style = DateTimeStyles.None)

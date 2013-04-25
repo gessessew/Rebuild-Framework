@@ -1,22 +1,18 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Rebuild.Extensions
 {
     public static class BytesExtensions
     {
-        public static string Encode(this byte[] buffer, Encoding encoding)
+        public static string ToBase64String(this byte[] buffer)
         {
-            return encoding.GetString(buffer, 0, buffer.Length);
+            return Convert.ToBase64String(buffer);
         }
 
-        public static string ToUnicode(this byte[] buffer)
+        public static string ToString(this byte[] buffer, Encoding encoding)
         {
-            return buffer.Encode(Encoding.Unicode);
-        }
-
-        public static string ToUtf8(this byte[] buffer)
-        {
-            return buffer.Encode(Encoding.UTF8);
+            return (encoding ?? Encoding.UTF8).GetString(buffer, 0, buffer.Length);
         }
     }
 }

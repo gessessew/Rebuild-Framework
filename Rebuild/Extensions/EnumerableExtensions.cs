@@ -20,6 +20,11 @@ namespace Rebuild.Extensions
             }
         }
 
+        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> items)
+        {
+            return items ?? Enumerable.Empty<T>();
+        }
+
         public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
         {
             foreach (var item in items)
@@ -69,11 +74,6 @@ namespace Rebuild.Extensions
         public static IEnumerable<T> Prepend<T>(this IEnumerable<T> items, IEnumerable<T> second)
         {
             return second.Concat(items);
-        }
-
-        public static IEnumerable<T> Safe<T>(this IEnumerable<T> items)
-        {
-            return items ?? Enumerable.Empty<T>();
         }
 
         public static IEnumerable<T> TrimNull<T>(this IEnumerable<T> items)

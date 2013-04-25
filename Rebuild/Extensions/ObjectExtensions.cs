@@ -10,9 +10,22 @@ namespace Rebuild.Extensions
             return obj;
         }
 
-        public static TValue SelectOrDefault<T, TValue>(this T obj, Func<T, TValue> selector, TValue defaultValue = default(TValue))
+        public static T DoIfNotNull<T>(this T obj, Action<T> action)
         {
-            return obj == null || selector == null ? defaultValue : selector(obj);
+            if (obj != null)
+                action(obj);
+
+            return obj;
+        }
+
+        public static TValue IfNotNull<T, TValue>(this T obj, Func<T, TValue> selector, TValue defaultValue = default(TValue))
+        {
+            return obj == null ? defaultValue : selector(obj);
+        }
+
+        public static TValue IfNotNull<T, TValue>(this T obj, Func<T, TValue> selector, Func<TValue> selectorIfNull)
+        {
+            return obj == null ? selectorIfNull() : selector(obj);
         }
     }
 }
