@@ -6,6 +6,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebuild.Test", "Rebuild.Test\Rebuild.Test.csproj", "{3E1A057F-22E6-4EAA-BE34-361334130DAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DA7E0624-1BF2-4352-9789-2911DEEEBD0A}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebuild.NetFx", "Rebuild.NetFx\Rebuild.NetFx.csproj", "{3F4432A6-D94E-410E-B23C-924908F82754}"
 EndProject

@@ -22,7 +22,6 @@
     <Content Include="dateTime.min.js">
       <DependentUpon>dateTime.ts</DependentUpon>
     </Content>
-    <Content Include="default.htm" />
     <Content Include="file1.js">
       <DependentUpon>dateTime.ts</DependentUpon>
     </Content>
