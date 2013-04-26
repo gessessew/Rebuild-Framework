@@ -1,5 +1,5 @@
-/// <reference path="../../Rebuild/Scripts/guid.ts" />
-/// <reference path="typings/jasmine/jasmine.d.ts" />
+/// <reference path="../Rebuild.TypeScript/guid.ts" />
+/// <reference path="Scripts/typings/jasmine/jasmine.d.ts" />
 
 describe("guid", function () {
     it("newGuid format is correct", () =>

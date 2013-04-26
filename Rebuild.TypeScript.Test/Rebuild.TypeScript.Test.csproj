@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3E1A057F-22E6-4EAA-BE34-361334130DAE}</ProjectGuid>
+    <ProjectGuid>{20D4BB5E-28CD-4597-AB4E-755D24BCA50E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rebuild</RootNamespace>
-    <AssemblyName>Rebuild.Test</AssemblyName>
+    <RootNamespace>Rebuild.TypeScript.Test</RootNamespace>
+    <AssemblyName>Rebuild.TypeScript.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -52,20 +52,39 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Extensions\DateTimeExtensionsTests.cs" />
-    <Compile Include="Extensions\DateTimeOffsetExtensionsTests.cs" />
-    <Compile Include="Extensions\DictionaryExtensions.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Extensions\ListExtensionsTests.cs" />
-    <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Rebuild\Rebuild.csproj">
-      <Project>{3f0f67f1-b5ba-4043-b7f1-68e9e4558ce5}</Project>
-      <Name>Rebuild</Name>
-    </ProjectReference>
+    <TypeScriptCompile Include="dateTime.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dateTime.js">
+      <DependentUpon>dateTime.ts</DependentUpon>
+    </Content>
+    <Content Include="dateTime.min.js">
+      <DependentUpon>dateTime.ts</DependentUpon>
+    </Content>
+    <Content Include="guid.js">
+      <DependentUpon>guid.ts</DependentUpon>
+    </Content>
+    <Content Include="guid.min.js">
+      <DependentUpon>guid.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="guid.ts" />
+    <Content Include="Scripts\typings\jasmine\jasmine.d.ts" />
+    <Content Include="timeSpan.js">
+      <DependentUpon>timeSpan.ts</DependentUpon>
+    </Content>
+    <Content Include="timeSpan.min.js">
+      <DependentUpon>timeSpan.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="timeSpan.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="timeSpan.js.map">
+      <DependentUpon>timeSpan.ts</DependentUpon>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

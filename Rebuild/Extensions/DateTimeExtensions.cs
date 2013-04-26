@@ -26,7 +26,7 @@ namespace Rebuild.Extensions
 
         public static DateTime FirstDayOfMonth(this DateTime value)
         {
-            return value.AddDays(-value.Day + 1);
+            return new DateTime(value.Year, value.Month, 1);
         }
 
         public static DateTime FirstDayOfYear(this DateTime value)
@@ -76,7 +76,7 @@ namespace Rebuild.Extensions
 
         public static DateTime LastDayOfMonth(this DateTime value)
         {
-            return value.AddDays(-value.Day).AddMonths(1);
+            return value.FirstDayOfMonth().AddMonths(1).AddDays(-1);
         }
 
         public static DateTime LastDayOfYear(this DateTime value)
@@ -96,15 +96,23 @@ namespace Rebuild.Extensions
             return value.AddDays(v >= 0 ? v - 7 : v);
         }
 
-        public static int WeekNumber(this DateTime value, bool excludeLastYear = true, DayOfWeek startWeekDay = DayOfWeek.Sunday)
+        public static long ToJavascriptMilliseconds(this DateTime value)
+        {
+            return (long)(value.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+        }
+
+        public static int WeekNumber(this DateTime value, bool startOnFirstFullWeek = false, DayOfWeek startWeekDay = DayOfWeek.Sunday)
         {
             var d = value.FirstDayOfYear();
-            excludeLastYear &= d.DayOfWeek != startWeekDay;
 
             if (d.DayOfWeek != startWeekDay)
-                d = d.PreviousDay(startWeekDay);
+                d = startOnFirstFullWeek ? d.NextDay(startWeekDay) : d.PreviousDay(startWeekDay);
 
-            return (int)((value.Date - d).TotalDays / 7) + (excludeLastYear ? 1 : 0);
+            if (value.Date < d)
+                return 52;
+
+            var v = (int)((value.Date - d).TotalDays / 7) + 1;
+            return v == 53 ? 1 : v;
         }
     }
 }

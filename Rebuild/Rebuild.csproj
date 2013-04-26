@@ -59,28 +59,7 @@
     <Compile Include="Utils\Doubles.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\timeSpan.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\guid.ts" />
-    <Content Include="Scripts\guid.js">
-      <DependentUpon>guid.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\guid.min.js">
-      <DependentUpon>guid.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\timeSpan.js">
-      <DependentUpon>timeSpan.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\timeSpan.min.js">
-      <DependentUpon>timeSpan.ts</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="rebuild.snk.pfx" />
-    <None Include="Scripts\guid.min.js.map">
-      <DependentUpon>guid.js</DependentUpon>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

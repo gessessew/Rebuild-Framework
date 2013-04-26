@@ -57,5 +57,22 @@ namespace Rebuild.Extensions
             Assert.AreEqual(new DateTime(2013, 4, 20), new DateTime(2013, 4, 21).PreviousDay(DayOfWeek.Saturday));
             Assert.AreEqual(new DateTime(2013, 4, 13), new DateTime(2013, 4, 19).PreviousDay(DayOfWeek.Saturday));
         }
+
+        [TestMethod]
+        public void ToJavascriptMilliseconds()
+        {
+            new DateTime(2013, 1, 1).ToJavascriptMilliseconds().AssertEqual(1357016400000);
+        }
+
+        [TestMethod]
+        public void WeekNumber()
+        {
+            //new DateTime(2013, 1, 1).WeekNumber().AssertEqual(1);
+            //new DateTime(2013, 1, 1).WeekNumber(startOnFirstFullWeek: true).AssertEqual(52);
+            //new DateTime(2013, 1, 8).WeekNumber(startOnFirstFullWeek: true).AssertEqual(1);
+            //new DateTime(2013, 1, 8).WeekNumber().AssertEqual(2);
+            //new DateTime(2012, 12, 31).WeekNumber().AssertEqual(1);
+            new DateTime(2012, 12, 31).WeekNumber(startOnFirstFullWeek: true).AssertEqual(52);
+        }
     }
 }

@@ -22,14 +22,36 @@
     <Content Include="dateTime.min.js">
       <DependentUpon>dateTime.ts</DependentUpon>
     </Content>
-    <Content Include="file1.js">
-      <DependentUpon>dateTime.ts</DependentUpon>
+    <Content Include="timeSpan.min.js">
+      <DependentUpon>timeSpan.ts</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="guid.ts" />
+    <Content Include="guid.js">
+      <DependentUpon>guid.ts</DependentUpon>
+    </Content>
+    <Content Include="guid.min.js">
+      <DependentUpon>guid.ts</DependentUpon>
+    </Content>
+    <Content Include="index.html" />
+    <Content Include="timeSpan.js">
+      <DependentUpon>timeSpan.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="timeSpan.ts" />
     <TypeScriptCompile Include="dateTime.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dateTime.js.map">
       <DependentUpon>dateTime.ts</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="guid.js.map">
+      <DependentUpon>guid.ts</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="timeSpan.js.map">
+      <DependentUpon>timeSpan.ts</DependentUpon>
     </Content>
   </ItemGroup>
   <PropertyGroup>

@@ -5,12 +5,12 @@ namespace Rebuild.Extensions
 {
     public static class X509Certificate2Extensions
     {
-        public static RSACryptoServiceProvider PrivateKeyRsaProvider(this X509Certificate2 certificate)
+        public static RSACryptoServiceProvider PrivateKeyRsa(this X509Certificate2 certificate)
         {
             return (RSACryptoServiceProvider)certificate.PrivateKey;
         }
 
-        public static RSACryptoServiceProvider PublicKeyRsaProvider(this X509Certificate2 certificate)
+        public static RSACryptoServiceProvider PublicKeyRsa(this X509Certificate2 certificate)
         {
             return (RSACryptoServiceProvider)certificate.PublicKey.Key;
         }

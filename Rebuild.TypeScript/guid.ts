@@ -1,5 +1,4 @@
-class Guid
-{
+class Guid {
     private id: string;
     private static emptyGuid = new Guid("00000000-0000-0000-0000-000000000000");
     constructor(id: string) {
@@ -15,8 +14,7 @@ class Guid
         );
     }
     static regex(format?: string) {
-        switch (format)
-        {
+        switch (format) {
             case 'x':
             case 'X':
                 return (/\{[a-z0-9]{8}(?:-[a-z0-9]{4}){3}-[a-z0-9]{12}\}/i);
@@ -32,8 +30,7 @@ class Guid
             .substring(1);
     }
     toString(format: string) {
-        switch (format)
-        {
+        switch (format) {
             case "x":
             case "X":
                 return "{" + this.id + "}";
