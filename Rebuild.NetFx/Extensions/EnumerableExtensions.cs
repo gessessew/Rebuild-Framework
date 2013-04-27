@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Rebuild.Extensions
 {
-    class EnumerableExtensions
+    public static class EnumerableExtensions
     {
+        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> items, IEqualityComparer<T> comparer = null)
+        {
+            return new HashSet<T>(items, comparer);
+        }
     }
 }

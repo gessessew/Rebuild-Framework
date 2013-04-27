@@ -52,10 +52,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Extensions\DateTimeExtensionsTests.cs" />
     <Compile Include="Extensions\DateTimeOffsetExtensionsTests.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensionsTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
