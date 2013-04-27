@@ -1,5 +1,3 @@
-/// <reference path="../Rebuild.TypeScript/timeSpan.ts" />
-/// <reference path="Scripts/typings/jasmine/jasmine.d.ts" />
 describe("timeSpan", function () {
     it("from 1000 ms = 1000 ms", function () {
         return expect(TimeSpan.from(0, 0, 0, 0, 1000).valueOf()).toBe(1000);
@@ -20,4 +18,3 @@ describe("timeSpan", function () {
         return expect(TimeSpan.from(0, 0, 1).add(0, 0, 2).valueOf()).toBe(3 * 60 * 1000);
     });
 });
-//@ sourceMappingURL=timeSpan.js.map

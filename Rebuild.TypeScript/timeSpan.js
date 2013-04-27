@@ -61,4 +61,3 @@ var TimeSpan = (function () {
     };
     return TimeSpan;
 })();
-//@ sourceMappingURL=timeSpan.js.map

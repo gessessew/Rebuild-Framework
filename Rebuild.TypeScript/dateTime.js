@@ -1,4 +1,3 @@
-/// <reference path="../Rebuild.TypeScript.Test/timeSpan.ts" />
 var CalendarWeekRule;
 (function (CalendarWeekRule) {
     CalendarWeekRule._map = [];
@@ -295,4 +294,3 @@ var DateTime = (function () {
     };
     return DateTime;
 })();
-//@ sourceMappingURL=dateTime.js.map
