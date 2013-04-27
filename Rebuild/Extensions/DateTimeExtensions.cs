@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Rebuild.Extensions
 {
@@ -101,18 +102,13 @@ namespace Rebuild.Extensions
             return (long)(value.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
         }
 
-        public static int WeekNumber(this DateTime value, bool startOnFirstFullWeek = false, DayOfWeek startWeekDay = DayOfWeek.Sunday)
+        public static int WeekOfYear(this DateTime value, CalendarWeekRule rule = CalendarWeekRule.FirstDay, DayOfWeek firstDayOfWeek = DayOfWeek.Sunday)
         {
-            var d = value.FirstDayOfYear();
-
-            if (d.DayOfWeek != startWeekDay)
-                d = startOnFirstFullWeek ? d.NextDay(startWeekDay) : d.PreviousDay(startWeekDay);
-
-            if (value.Date < d)
-                return 52;
-
-            var v = (int)((value.Date - d).TotalDays / 7) + 1;
-            return v == 53 ? 1 : v;
+            return CultureInfo
+                .CurrentCulture
+                .DateTimeFormat
+                .Calendar
+                .GetWeekOfYear(value, rule, firstDayOfWeek);
         }
     }
 }

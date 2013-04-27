@@ -1,20 +1,20 @@
 /// <reference path="../Rebuild.TypeScript.Test/timeSpan.ts" />
+var CalendarWeekRule;
+(function (CalendarWeekRule) {
+    CalendarWeekRule._map = [];
+    CalendarWeekRule.firstDay = 0;
+    CalendarWeekRule.firstFullWeek = 1;
+    CalendarWeekRule.firstFourDayWeek = 2;
+})(CalendarWeekRule || (CalendarWeekRule = {}));
 var DayOfWeek;
 (function (DayOfWeek) {
     DayOfWeek._map = [];
-    DayOfWeek._map[0] = "sunday";
     DayOfWeek.sunday = 0;
-    DayOfWeek._map[1] = "monday";
     DayOfWeek.monday = 1;
-    DayOfWeek._map[2] = "tuesday";
     DayOfWeek.tuesday = 2;
-    DayOfWeek._map[3] = "wednesday";
     DayOfWeek.wednesday = 3;
-    DayOfWeek._map[4] = "thursday";
     DayOfWeek.thursday = 4;
-    DayOfWeek._map[5] = "friday";
     DayOfWeek.friday = 5;
-    DayOfWeek._map[6] = "saturday";
     DayOfWeek.saturday = 6;
 })(DayOfWeek || (DayOfWeek = {}));
 var DateTime = (function () {
@@ -82,10 +82,10 @@ var DateTime = (function () {
         var num4 = month - 1 + months;
         if(num4 >= 0) {
             month = num4 % 12 + 1;
-            year += num4 / 12;
+            year += Math.floor(num4 / 12);
         } else {
             month = 12 + (num4 + 1) % 12;
-            year += (num4 - 11) / 12;
+            year += Math.floor((num4 - 11) / 12);
         }
         if(year < 1 || year > 9999) {
             throw new RangeException();
@@ -117,7 +117,7 @@ var DateTime = (function () {
             var array = DateTime.isLeapYear(year) ? DateTime.daysToMonth366 : DateTime.daysToMonth365;
             if(day >= 1 && day <= array[month] - array[month - 1]) {
                 var num = year - 1;
-                return (num * 365 + num / 4 - num / 100 + num / 400 + array[month - 1] + day - 1) * 86400000;
+                return (num * 365 + Math.floor(num / 4) - Math.floor(num / 100) + Math.floor(num / 400) + array[month - 1] + day - 1) * 86400000;
             }
         }
         throw new RangeException();
@@ -136,7 +136,7 @@ var DateTime = (function () {
         return n < 10 ? "0" + n : n.toString();
     };
     DateTime.fromDate = function fromDate(year, month, day, hour, minute, second, millisecond) {
-        return new DateTime(DateTime.dateToTicks(year, month, day) + hour * 3600000 + minute * 60000 + second * 1000 + millisecond);
+        return new DateTime(DateTime.dateToTicks(year, month, day) + (hour | 0) * 3600000 + (minute | 0) * 60000 + (second | 0) * 1000 + (millisecond | 0));
     };
     DateTime.fromNativeDate = function fromNativeDate(date) {
         return new DateTime(date.valueOf() + 62135596800000 - date.getTimezoneOffset() * 60000);
@@ -180,7 +180,7 @@ var DateTime = (function () {
         return this.getDatePart(3);
     };
     DateTime.prototype.getDayOfWeek = function () {
-        return DateTime.dayOfWeeks[(this.ms / 86400000 + 1) % 7];
+        return DateTime.dayOfWeeks[(Math.floor(this.ms / 86400000) + 1) % 7];
     };
     DateTime.prototype.getDayOfYear = function () {
         return this.getDatePart(1);
@@ -190,6 +190,45 @@ var DateTime = (function () {
     };
     DateTime.prototype.getFirstDayOfYear = function () {
         return DateTime.fromDate(this.getYear(), 1, 1);
+    };
+    DateTime.prototype.getFirstDayWeekOfYear = function (firstDayOfWeek) {
+        var dayOfYear = this.getDayOfYear() - 1;
+        var w = this.getDayOfWeek() - (dayOfYear % 7);
+        var i = (w - firstDayOfWeek + 14) % 7;
+        return Math.floor((dayOfYear + i) / 7) + 1;
+    };
+    DateTime.prototype.getWeekOfYearFullDays = function (firstDayOfWeek, fullDays) {
+        var num = this.getDayOfYear() - 1;
+        var num2 = this.getDayOfWeek() - (num % 7);
+        var num3 = (firstDayOfWeek - num2 + 14) % 7;
+        if(num3 != 0 && num3 >= fullDays) {
+            num3 -= 7;
+        }
+        var num4 = num - num3;
+        if(num4 >= 0) {
+            return Math.floor(num4 / 7) + 1;
+        }
+        if(this <= new DateTime(0).addDays(num)) {
+            return this.getWeekOfYearOfMinSupportedDateTime(firstDayOfWeek, fullDays);
+        }
+        return this.addDays(-(num + 1)).getWeekOfYearFullDays(firstDayOfWeek, fullDays);
+    };
+    DateTime.prototype.getWeekOfYearOfMinSupportedDateTime = function (firstDayOfWeek, minimumDaysInFirstWeek) {
+        var min = new DateTime(0);
+        var num = min.getDayOfYear() - 1;
+        var num2 = min.getDayOfWeek() - (num % 7);
+        var num3 = (firstDayOfWeek + 7 - num2) % 7;
+        if(num3 == 0 || num3 >= minimumDaysInFirstWeek) {
+            return 1;
+        }
+        var num4 = 365 - 1;
+        var num5 = num2 - 1 - num4 % 7;
+        var num6 = (firstDayOfWeek - num5 + 14) % 7;
+        var num7 = num4 - num6;
+        if(num6 >= minimumDaysInFirstWeek) {
+            num7 += 7;
+        }
+        return Math.floor(num7 / 7) + 1;
     };
     DateTime.prototype.getHour = function () {
         return Math.floor(this.ms / 3600000) % 24;
@@ -242,6 +281,17 @@ var DateTime = (function () {
     };
     DateTime.prototype.valueOf = function () {
         return this.ms;
+    };
+    DateTime.prototype.weekOfYear = function (rule, firstDayOfWeek) {
+        firstDayOfWeek |= DayOfWeek.sunday;
+        switch(rule) {
+            case CalendarWeekRule.firstFullWeek:
+                return this.getWeekOfYearFullDays(firstDayOfWeek, 7);
+            case CalendarWeekRule.firstFourDayWeek:
+                return this.getWeekOfYearFullDays(firstDayOfWeek, 4);
+            default:
+                return this.getFirstDayWeekOfYear(firstDayOfWeek);
+        }
     };
     return DateTime;
 })();

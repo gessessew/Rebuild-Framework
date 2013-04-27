@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 
 namespace Rebuild.Extensions
 {
@@ -65,14 +66,14 @@ namespace Rebuild.Extensions
         }
 
         [TestMethod]
-        public void WeekNumber()
+        public void WeekOfYear()
         {
-            //new DateTime(2013, 1, 1).WeekNumber().AssertEqual(1);
-            //new DateTime(2013, 1, 1).WeekNumber(startOnFirstFullWeek: true).AssertEqual(52);
-            //new DateTime(2013, 1, 8).WeekNumber(startOnFirstFullWeek: true).AssertEqual(1);
-            //new DateTime(2013, 1, 8).WeekNumber().AssertEqual(2);
-            //new DateTime(2012, 12, 31).WeekNumber().AssertEqual(1);
-            new DateTime(2012, 12, 31).WeekNumber(startOnFirstFullWeek: true).AssertEqual(52);
+            new DateTime(2013, 1, 1).WeekOfYear().AssertEqual(1);
+            new DateTime(2013, 1, 1).WeekOfYear(CalendarWeekRule.FirstFullWeek).AssertEqual(53);
+            new DateTime(2013, 1, 8).WeekOfYear(CalendarWeekRule.FirstFullWeek).AssertEqual(1);
+            new DateTime(2013, 1, 8).WeekOfYear().AssertEqual(2);
+            new DateTime(2012, 12, 31).WeekOfYear().AssertEqual(53);
+            new DateTime(2012, 12, 31).WeekOfYear(CalendarWeekRule.FirstFullWeek).AssertEqual(53);
         }
     }
 }

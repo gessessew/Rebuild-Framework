@@ -1,13 +1,19 @@
 /// <reference path="../Rebuild.TypeScript.Test/timeSpan.ts" />
 
+enum CalendarWeekRule {
+    firstDay = 0,
+    firstFullWeek = 1,
+    firstFourDayWeek = 2
+}
+
 enum DayOfWeek {
-    sunday,
-    monday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    saturday
+    sunday = 0,
+    monday = 1,
+    tuesday = 2,
+    wednesday = 3,
+    thursday = 4,
+    friday = 5,
+    saturday = 6
 }
 
 class DateTime
@@ -46,11 +52,11 @@ class DateTime
 
         if (num4 >= 0) {
             month = num4 % 12 + 1;
-            year += num4 / 12;
+            year += Math.floor(num4 / 12);
         }
         else {
             month = 12 + (num4 + 1) % 12;
-            year += (num4 - 11) / 12;
+            year += Math.floor((num4 - 11) / 12);
         }
 
         if (year < 1 || year > 9999)
@@ -62,6 +68,7 @@ class DateTime
 
         return new DateTime(DateTime.dateToTicks(year, month, day) + this.ms % 86400000);
     }
+
     addSeconds(seconds: number) {
         return new DateTime(this.ms + seconds * 1000);
     }
@@ -88,7 +95,7 @@ class DateTime
 
             if (day >= 1 && day <= array[month] - array[month - 1]) {
                 var num = year - 1;
-                return (num * 365 + num / 4 - num / 100 + num / 400 + array[month - 1] + day - 1) * 86400000;
+                return (num * 365 + Math.floor(num / 4) - Math.floor(num / 100) + Math.floor(num / 400) + array[month - 1] + day - 1) * 86400000;
             }
         }
         throw new RangeException();
@@ -111,7 +118,7 @@ class DateTime
     }
 
     static fromDate(year: number, month: number, day: number, hour?: number, minute?: number, second?: number, millisecond?: number) {
-        return new DateTime(DateTime.dateToTicks(year, month, day) + hour * 3600000 + minute * 60000 + second * 1000 + millisecond);
+        return new DateTime(DateTime.dateToTicks(year, month, day) + (hour | 0) * 3600000 + (minute | 0) * 60000 + (second  | 0) * 1000 + (millisecond | 0));
     }
 
     static fromNativeDate(date: Date) {
@@ -163,7 +170,7 @@ class DateTime
     }
 
     getDayOfWeek() {
-        return DateTime.dayOfWeeks[(this.ms / 86400000 + 1) % 7];
+        return DateTime.dayOfWeeks[(Math.floor(this.ms / 86400000) + 1) % 7];
     }
 
     getDayOfYear() {
@@ -176,6 +183,52 @@ class DateTime
 
     getFirstDayOfYear() {
         return DateTime.fromDate(this.getYear(), 1, 1);
+    }
+
+    private getFirstDayWeekOfYear(firstDayOfWeek: DayOfWeek) {
+        var dayOfYear = this.getDayOfYear() - 1;
+        var w = this.getDayOfWeek() - (dayOfYear % 7);
+        var i = (w - firstDayOfWeek + 14) % 7;
+        return Math.floor((dayOfYear + i) / 7) + 1;
+    }
+
+    private getWeekOfYearFullDays(firstDayOfWeek: DayOfWeek, fullDays: number) {
+        var num = this.getDayOfYear() - 1;
+        var num2 = this.getDayOfWeek() - (num % 7);
+        var num3 = (firstDayOfWeek - num2 + 14) % 7;
+        if (num3 != 0 && num3 >= fullDays)
+            num3 -= 7;
+
+        var num4 = num - num3;
+        if (num4 >= 0)
+            return Math.floor(num4 / 7) + 1;
+
+        if (this <= new DateTime(0).addDays(num))
+        {
+            return this.getWeekOfYearOfMinSupportedDateTime(firstDayOfWeek, fullDays);
+        }
+
+        return this.addDays(-(num + 1)).getWeekOfYearFullDays(firstDayOfWeek, fullDays);
+    }
+
+    private getWeekOfYearOfMinSupportedDateTime(firstDayOfWeek: DayOfWeek, minimumDaysInFirstWeek: number) {
+        var min = new DateTime(0);
+        var num = min.getDayOfYear() - 1;
+        var num2 = min.getDayOfWeek() - (num % 7);
+        var num3 = (firstDayOfWeek + 7 - num2) % 7;
+
+        if (num3 == 0 || num3 >= minimumDaysInFirstWeek)
+            return 1;
+
+        var num4 = 365 - 1;
+        var num5 = num2 - 1 - num4 % 7;
+        var num6 = (firstDayOfWeek - num5 + 14) % 7;
+        var num7 = num4 - num6;
+
+        if (num6 >= minimumDaysInFirstWeek)
+            num7 += 7;
+
+        return Math.floor(num7 / 7) + 1;
     }
 
     getHour() {
@@ -242,5 +295,20 @@ class DateTime
 
     valueOf() {
         return this.ms;
+    }
+
+    weekOfYear(rule?: CalendarWeekRule, firstDayOfWeek?: DayOfWeek) {
+        firstDayOfWeek |= DayOfWeek.sunday;
+        switch (rule)
+        {
+            case CalendarWeekRule.firstFullWeek:
+                return this.getWeekOfYearFullDays(firstDayOfWeek, 7);
+
+            case CalendarWeekRule.firstFourDayWeek:
+                return this.getWeekOfYearFullDays(firstDayOfWeek, 4);
+
+            default:
+                return this.getFirstDayWeekOfYear(firstDayOfWeek);
+        }
     }
 }
