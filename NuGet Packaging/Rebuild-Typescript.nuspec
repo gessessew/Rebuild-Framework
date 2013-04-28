@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<metadata>
+    <version>0.4</version>
+    <authors>Rebuild</authors>
+    <owners />
+    <!--<iconUrl>http://domain/Content/images/LOGO_32x32.png</iconUrl>-->
+    <id>Rebuild-Framework</id>
+    <title>Rebuild Framework</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Extensions Methods and Helpers</description>
+    <dependencies>
+        <dependency id="Newtonsoft.Json" version="3.5.8" />
+    </dependencies>       
+</metadata>
+<files>
+  <file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\portable-sl4+wp75+windows8" />
+  <file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\portable-sl4+wp75+windows8" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\sl4" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\sl4" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\wp75" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\wp75" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\net40" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\net40" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\windows8" />
+	<file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\windows8" />
+  
+  <file src="..\Rebuild.NetFx\Bin\Release\Rebuild.NetFx.dll" target="lib\net40" />
+  <file src="..\Rebuild.NetFx\Bin\Release\Rebuild.NetFx.pdb" target="lib\net40" />
+</files>
+</package>
