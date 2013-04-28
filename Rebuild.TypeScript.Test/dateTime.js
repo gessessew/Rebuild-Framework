@@ -1,3 +1,5 @@
+var DateTime = rb.DateTime;
+var CalendarWeekRule = rb.CalendarWeekRule;
 describe("dateTime", function () {
     it("fromNativeDate", function () {
         for(var y = 1970; y < 2013; y++) {

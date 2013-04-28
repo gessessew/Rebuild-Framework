@@ -18,6 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebuild.NetFx.Test", "Rebui
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B952FF2D-CEFD-4E0C-8F9B-51E901D9BD9F}"
 	ProjectSection(SolutionItems) = preProject
+		NuGet Packaging\Rebuild-Typescript.nuspec = NuGet Packaging\Rebuild-Typescript.nuspec
 		NuGet Packaging\Rebuild.nuspec = NuGet Packaging\Rebuild.nuspec
 	EndProjectSection
 EndProject

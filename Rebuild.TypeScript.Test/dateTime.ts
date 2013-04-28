@@ -1,5 +1,8 @@
-/// <reference path="../Rebuild.TypeScript/dateTime.ts" />
+/// <reference path="../Rebuild.TypeScript/rebuild.ts" />
 /// <reference path="Scripts/typings/jasmine/jasmine.d.ts" />
+
+var DateTime = rb.DateTime;
+var CalendarWeekRule = rb.CalendarWeekRule;
 
 describe("dateTime", function () {
     it("fromNativeDate", () => {

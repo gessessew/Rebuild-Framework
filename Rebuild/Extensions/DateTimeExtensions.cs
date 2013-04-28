@@ -30,6 +30,12 @@ namespace Rebuild.Extensions
             return new DateTime(value.Year, value.Month, 1);
         }
 
+        public static DateTime FirstDayOfWeek(this DateTime value, DayOfWeek firstDayOfWeek = DayOfWeek.Sunday)
+        {
+            value = value.Date;
+            return value.DayOfWeek == firstDayOfWeek ? value : value.PreviousDay(firstDayOfWeek);
+        }
+
         public static DateTime FirstDayOfYear(this DateTime value)
         {
             return new DateTime(value.Year, 1, 1);
@@ -78,6 +84,12 @@ namespace Rebuild.Extensions
         public static DateTime LastDayOfMonth(this DateTime value)
         {
             return value.FirstDayOfMonth().AddMonths(1).AddDays(-1);
+        }
+
+        public static DateTime LastDayOfWeek(this DateTime value, DayOfWeek lastDayOfWeek = DayOfWeek.Sunday)
+        {
+            value = value.Date;
+            return value.DayOfWeek == lastDayOfWeek ? value : value.NextDay(lastDayOfWeek);
         }
 
         public static DateTime LastDayOfYear(this DateTime value)

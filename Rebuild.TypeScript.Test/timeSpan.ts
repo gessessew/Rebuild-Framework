@@ -1,5 +1,7 @@
-/// <reference path="../Rebuild.TypeScript/timeSpan.ts" />
+/// <reference path="../Rebuild.TypeScript/rebuild.ts" />
 /// <reference path="Scripts/typings/jasmine/jasmine.d.ts" />
+
+var TimeSpan = rb.TimeSpan;
 
 describe("timeSpan", function () {
     it("from 1000 ms = 1000 ms", () =>

@@ -1,3 +1,4 @@
+var TimeSpan = rb.TimeSpan;
 describe("timeSpan", function () {
     it("from 1000 ms = 1000 ms", function () {
         return expect(TimeSpan.from(0, 0, 0, 0, 1000).valueOf()).toBe(1000);

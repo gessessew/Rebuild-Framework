@@ -7,6 +7,45 @@ namespace Rebuild.Extensions
 {
     public static class EnumerableExtensions
     {
+        public static IEnumerable<T[]> Batch<T>(this IEnumerable<T> items, int batchSize)
+        {
+            var list = new List<T>(batchSize);
+
+            foreach (var item in items)
+            {
+                list.Add(item);
+                if (list.Count == batchSize)
+                {
+                    var array = list.ToArray();
+                    list.Clear();
+                    yield return array;
+                }
+            }
+
+            if (list.Count != 0)
+                yield return list.ToArray();
+        }
+
+        public static IEnumerable<T[]> Batch<T>(this IEnumerable<T> items, Func<T, IList<T>, bool> splitPredicate)
+        {
+            var list = new List<T>();
+
+            foreach (var item in items)
+            {
+                list.Add(item);
+
+                if (splitPredicate(item, list))
+                {
+                    var array = list.ToArray();
+                    list.Clear();
+                    yield return array;
+                }
+            }
+
+            if (list.Count != 0)
+                yield return list.ToArray();
+        }
+
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> items, params T[] args)
         {
             return args == null ? items : items.Concat((IEnumerable<T>)args);
