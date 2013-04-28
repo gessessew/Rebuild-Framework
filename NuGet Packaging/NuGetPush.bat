@@ -1,2 +1,2 @@
-NuGet.exe push Rebuild-Framework.0.5.nupkg
+NuGet.exe push Rebuild-Framework.0.6.nupkg
 pause
