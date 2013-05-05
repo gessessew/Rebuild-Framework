@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rebuild.IO;
 using Rebuild.Utils;
 using System.Collections.Specialized;
 using System.Globalization;
@@ -31,17 +32,10 @@ namespace Rebuild.Extensions
             return HttpUtility.ParseQueryString(query);
         }
 
-        public static QueryStringBuilder ToQueryString(this string query)
-        {
-            if (query.EndsWith("/"))
-                query = query.Left(query.Length - 1);
-
-            return new QueryStringBuilder(query, query.IndexOf('?') > -1);
-        }
-
         public static string RemoveDiacritics(this string s)
         {
             var b = new StringBuilder(s.Normalize(NormalizationForm.FormD));
+
             for (var i = b.Length - 1; i > -1; i--)
             {
                 if (CharUnicodeInfo.GetUnicodeCategory(b[i]) == UnicodeCategory.NonSpacingMark)
@@ -49,7 +43,16 @@ namespace Rebuild.Extensions
                     b.Remove(i, 1);
                 }
             }
+            
             return b.ToString();
+        }
+
+        public static QueryStringBuilder ToQueryString(this string query)
+        {
+            if (query.EndsWith("/"))
+                query = query.Left(query.Length - 1);
+
+            return new QueryStringBuilder(query, query.IndexOf('?') > -1);
         }
     }
 }

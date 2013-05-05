@@ -41,36 +41,6 @@ namespace Rebuild.Extensions
             return new DateTime(value.Year, 1, 1);
         }
 
-        public static DateTime FloorToYears(this DateTime date)
-        {
-            return new DateTime(date.Year, 1, 1);
-        }
-
-        public static DateTime FloorToMonths(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, 1);
-        }
-
-        public static DateTime FloorToHours(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, date.Day, date.Hour, 0, 0, date.Kind);
-        }
-
-        public static DateTime FloorToMinutes(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, date.Kind);
-        }
-
-        public static DateTime FloorToSeconds(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Kind);
-        }
-
-        public static DateTime FloorToMilliseconds(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond, date.Kind);
-        }
-
         public static bool HasValue(this DateTime date)
         {
             return date != default(DateTime);
@@ -103,10 +73,20 @@ namespace Rebuild.Extensions
             return value.AddDays(v >= 0 ? 7 - v : -v);
         }
 
+        public static DateTime NextDayOrValue(this DateTime value, DayOfWeek dayOfWeek)
+        {
+            return value.DayOfWeek == dayOfWeek ? value : value.NextDay(dayOfWeek);
+        }
+
         public static DateTime PreviousDay(this DateTime value, DayOfWeek dayOfWeek)
         {
             var v = (int)dayOfWeek - (int)value.DayOfWeek;
             return value.AddDays(v >= 0 ? v - 7 : v);
+        }
+
+        public static DateTime PreviousDayOrValue(this DateTime value, DayOfWeek dayOfWeek)
+        {
+            return value.DayOfWeek == dayOfWeek ? value : value.PreviousDay(dayOfWeek);
         }
 
         public static long ToJavascriptMilliseconds(this DateTime value)

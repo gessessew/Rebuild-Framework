@@ -17,8 +17,8 @@ namespace Rebuild.Extensions
             new SampleObj { Value1 = "123", Value2 = 456 }
                 .SerializeToJsonString()
                 .DeserializeJson<SampleObj>()
-                .Do(o => o.Value1.AssertEqual("123"))
-                .Do(o => o.Value2.AssertEqual(456));
+                .With(o => o.Value1.AssertEqual("123"))
+                .With(o => o.Value2.AssertEqual(456));
         }
 
         #region class SampleObj

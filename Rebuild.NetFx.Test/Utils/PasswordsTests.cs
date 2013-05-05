@@ -14,13 +14,13 @@ namespace Rebuild.Utils
         [TestMethod]
         public void HashAndValidatePassword()
         {
-            Passwords
-                .HashPassword("123456")
-                .Do(hash => Assert.AreNotEqual("123456", hash.Password))
-                .Do(hash => string.IsNullOrWhiteSpace(hash.Password).AssertEqual(false))
-                .Do(hash => string.IsNullOrWhiteSpace(hash.Salt).AssertEqual(false))
-                .Do(hash => Passwords.ValidatePassword("123456", hash.Password, hash.Salt).AssertEqual(true))
-                .Do(hash => Passwords.ValidatePassword("123457", hash.Password, hash.Salt).AssertEqual(false));
+            var hash = Passwords.HashPassword("123456");
+
+            Assert.AreNotEqual("123456", hash.Password);
+            string.IsNullOrWhiteSpace(hash.Password).AssertEqual(false);
+            string.IsNullOrWhiteSpace(hash.Salt).AssertEqual(false);
+            Passwords.ValidatePassword("123456", hash.Password, hash.Salt).AssertEqual(true);
+            Passwords.ValidatePassword("123457", hash.Password, hash.Salt).AssertEqual(false);
         }
     }
 }

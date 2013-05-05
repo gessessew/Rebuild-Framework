@@ -5,28 +5,29 @@ namespace Rebuild.Extensions
 {
     public static class ListExtensions
     {
-        public static IList<T> BinaryInsert<T>(this IList<T> items, T value, int index = 0, int length = int.MaxValue, IComparer<T> comparer = null, BinaryInsertStrategy insertStrategy = BinaryInsertStrategy.DoNothingIfFound)
+        public static BinaryInsertResult<T> BinaryInsert<T>(this IList<T> list, T value, int index = 0, int length = int.MaxValue, IComparer<T> comparer = null, BinaryInsertStrategy insertStrategy = BinaryInsertStrategy.DoNothingIfFound)
         {
-            return BinaryInsert(items, value, k => k, index, length, comparer, insertStrategy);
+            return BinaryInsert(list, value, k => k, index, length, comparer, insertStrategy);
         }
 
-        public static IList<T> BinaryInsert<T, TKey>(this IList<T> items, T value, Func<T, TKey> keySelector, int index = 0, int length = int.MaxValue, IComparer<TKey> comparer = null, BinaryInsertStrategy insertStrategy = BinaryInsertStrategy.DoNothingIfFound)
+        public static BinaryInsertResult<T> BinaryInsert<T, TKey>(this IList<T> list, T item, Func<T, TKey> keySelector, int index = 0, int length = int.MaxValue, IComparer<TKey> comparer = null, BinaryInsertStrategy insertStrategy = BinaryInsertStrategy.DoNothingIfFound)
         {
-            index = BinarySearch(items, keySelector(value), keySelector, index, length, comparer);
+            index = BinarySearch(list, keySelector(item), keySelector, index, length, comparer);
+
             if (index > -1)
             {
                 switch (insertStrategy)
                 {
                     case BinaryInsertStrategy.DoNothingIfFound:
-                        return items;
+                        return new BinaryInsertResult<T>(list, item, index, false);
 
                     case BinaryInsertStrategy.InsertAfter:
                         index++;
                         break;
 
                     case BinaryInsertStrategy.Replace:
-                        items[index] = value;
-                        return items;
+                        list[index] = item;
+                        return new BinaryInsertResult<T>(list, item, index, true);
                 }
             }
             else
@@ -34,43 +35,48 @@ namespace Rebuild.Extensions
                 index = ~index;
             }
 
-            items.Insert(index, value);
-            return items;
+            list.Insert(index, item);
+            return new BinaryInsertResult<T>(list, item, index, true);
         }
 
-        public static bool BinaryRemove<T>(this IList<T> items, T value, int index = 0, int length = int.MaxValue, IComparer<T> comparer = null)
+        public static BinaryRemoveResult<T> BinaryRemove<T>(this IList<T> list, T value, int index = 0, int length = int.MaxValue, IComparer<T> comparer = null)
         {
-            return BinaryRemove(items, value, k => k, index, length, comparer);
+            return BinaryRemove(list, value, k => k, index, length, comparer);
         }
 
-        public static bool BinaryRemove<T, TKey>(this IList<T> items, TKey value, Func<T, TKey> keySelector, int index = 0, int length = int.MaxValue, IComparer<TKey> comparer = null)
+        public static BinaryRemoveResult<T> BinaryRemove<T, TKey>(this IList<T> list, TKey value, Func<T, TKey> keySelector, int index = 0, int length = int.MaxValue, IComparer<TKey> comparer = null)
         {
-            index = BinarySearch(items, value, keySelector, index, length, comparer);
+            index = BinarySearch(list, value, keySelector, index, length, comparer);
+            var removedItem = default(T);
+
             if (index > -1)
-                items.RemoveAt(index);
+            {
+                removedItem = list[index];
+                list.RemoveAt(index);
+            }
 
-            return index > -1;
+            return new BinaryRemoveResult<T>(list, removedItem, index);
         }
 
-        public static int BinarySearch<T>(this IList<T> items, T value, int index = 0, int length = int.MaxValue, IComparer<T> comparer = null)
+        public static int BinarySearch<T>(this IList<T> list, T value, int index = 0, int length = int.MaxValue, IComparer<T> comparer = null)
         {
-            return BinarySearch<T, T>(items, value, key => key, index, length, comparer);
+            return BinarySearch<T, T>(list, value, key => key, index, length, comparer);
         }
 
-        public static int BinarySearch<T, TKey>(this IList<T> items, TKey value, Func<T, TKey> keySelector, int index = 0, int length = int.MaxValue, IComparer<TKey> comparer = null)
+        public static int BinarySearch<T, TKey>(this IList<T> list, TKey value, Func<T, TKey> keySelector, int index = 0, int length = int.MaxValue, IComparer<TKey> comparer = null)
         {
             if (comparer == null)
                 comparer = Comparer<TKey>.Default;
 
-            length = Math.Min(items.Count, index + length - 1);
+            length = Math.Min(list.Count, index + length - 1);
 
             while (index <= length)
             {
                 int i = index + (length - index >> 1);
 
-                var j = items[i] == null
+                var j = list[i] == null
                     ? value == null ? 0 : -1
-                    : comparer.Compare(keySelector(items[i]), value);
+                    : comparer.Compare(keySelector(list[i]), value);
 
                 if (j == 0)
                     return i;
@@ -84,12 +90,12 @@ namespace Rebuild.Extensions
             return ~index;
         }
 
-        public static IList<T> Swap<T>(this IList<T> items, int index1, int index2)
+        public static IList<T> Swap<T>(this IList<T> list, int index1, int index2)
         {
-            var item = items[index1];
-            items[index1] = items[index2];
-            items[index2] = item;
-            return items;
+            var item = list[index1];
+            list[index1] = list[index2];
+            list[index2] = item;
+            return list;
         }
     }
 

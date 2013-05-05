@@ -6,6 +6,26 @@ namespace Rebuild.Extensions
 {
     public static class StringExtensions
     {
+        public static bool EqualsCulture(this string s, string other)
+        {
+            return string.Equals(s, other, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool EqualsCultureIgnoreCase(this string s, string other)
+        {
+            return string.Equals(s, other, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool EqualsIgnoreCase(this string s, string other)
+        {
+            return string.Equals(s, other, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool EqualsOrdinal(this string s, string other)
+        {
+            return string.Equals(s, other, StringComparison.Ordinal);
+        }
+
         public static string FormatCulture(this string format, object arg0)
         {
             return string.Format(format, arg0);

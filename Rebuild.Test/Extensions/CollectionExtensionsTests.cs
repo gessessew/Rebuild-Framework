@@ -15,7 +15,10 @@ namespace Rebuild.Extensions
         {
             new List<int> { 1, 2 }
                 .AddIfNotExists(1)
-                .AddIfNotExists(2);
+                .Collection
+                .AddIfNotExists(2)
+                .Collection
+                .AssertSequenceEqual(1, 2);
         }
     }
 }

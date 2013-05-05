@@ -7,6 +7,18 @@ namespace Rebuild.Extensions
 {
     public static class EnumerableExtensions
     {
+        public static AddToResult<T, TCollection> AddTo<T, TCollection>(this IEnumerable<T> items, TCollection collection) where TCollection : ICollection<T>
+        {
+            var array = items.ToArray();
+
+            if (array.Length != 0)
+            {
+                collection.AddRange(array);
+            }
+
+            return new AddToResult<T, TCollection>(array, collection);
+        }
+
         public static IEnumerable<T[]> Batch<T>(this IEnumerable<T> items, int batchSize)
         {
             var list = new List<T>(batchSize);
@@ -51,6 +63,18 @@ namespace Rebuild.Extensions
             return args == null ? items : items.Concat((IEnumerable<T>)args);
         }
 
+        public static CopyToResult<T> CopyTo<T>(this IEnumerable<T> source, T[] destination, int destinationStartIndex)
+        {
+            var array = source.Take(Math.Max(destination.Length - destinationStartIndex, 0)).ToArray();
+
+            for (var i = 0; i < array.Length; i++)
+            {
+                destination[i + destinationStartIndex] = array[i];
+            }
+
+            return new CopyToResult<T>(source, destination, array);
+        }
+
         public static bool ContainsAll<T>(this IEnumerable<T> items, params T[] searchedItems)
         {
             return ContainsAll(items, searchedItems, default(IEqualityComparer<T>));
@@ -64,21 +88,23 @@ namespace Rebuild.Extensions
         public static bool ContainsAll<T>(this IEnumerable<T> items, IEnumerable<T> searchedItems, IEqualityComparer<T> comparer = null)
         {
             if (searchedItems == null)
-                return true;
-
-            var dic = new Dictionary<T, bool>(comparer);
-            foreach (var a in searchedItems)
             {
-                dic[a] = true;
+                return true;
             }
 
+            var dic = searchedItems.ToDictionary(k => k, v => true, comparer);
+
             if (dic.Count == 0)
+            {
                 return true;
+            }
 
             foreach(var item in items)
             {
                 if (dic.Remove(item) && dic.Count == 0)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -104,7 +130,9 @@ namespace Rebuild.Extensions
             foreach (var item in items)
             {
                 if (item is TSearchType)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -123,9 +151,24 @@ namespace Rebuild.Extensions
             foreach (var item in items)
             {
                 if (item != null)
+                {
                     action(item);
+                }
 
                 yield return item;
+            }
+        }
+
+        public static IEnumerable<T> Distinct<T, TKey>(this IEnumerable<T> items, Func<T, TKey> keySelector, IEqualityComparer<TKey> comparer = null)
+        {
+            var dic = new Dictionary<TKey, bool>(comparer);
+            
+            foreach(var item in items)
+            {
+                if (dic.AddIfNotExists(keySelector(item), true).IsAdded)
+                {
+                    yield return item;
+                }
             }
         }
 
@@ -142,12 +185,24 @@ namespace Rebuild.Extensions
             }
         }
 
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T,int> action)
+        {
+            var i = 0;
+
+            foreach (var item in items)
+            {
+                action(item, i++);
+            }
+        }
+
         public static void ForEachNotNull<T>(this IEnumerable<T> items, Action<T> action)
         {
             foreach (var item in items)
             {
                 if (item != null)
+                {
                     action(item);
+                }
             }
         }
 
@@ -331,6 +386,17 @@ namespace Rebuild.Extensions
             return second == null ? items : second.Concat(items);
         }
 
+        public static RemoveFromResult<T, TCollection> RemoveFrom<T, TCollection>(this IEnumerable<T> items, TCollection collection) where TCollection : ICollection<T>
+        {
+            return new RemoveFromResult<T, TCollection>(collection.RemoveRange(items).RemovedItems, collection);
+        }
+
+        public static TDestination RemoveKeysFrom<TKey, TValue, TDestination>(this IEnumerable<TKey> items, TDestination destination) where TDestination : IDictionary<TKey, TValue>
+        {
+            destination.RemoveKeys(items);
+            return destination;
+        }
+
         public static bool SequenceEqual<T>(this IEnumerable<T> first, params T[] second)
         {
             return Enumerable.SequenceEqual<T>(first, second);
@@ -341,9 +407,61 @@ namespace Rebuild.Extensions
             return Enumerable.SequenceEqual<T>(first, second, comparer);
         }
 
+        public static Dictionary<TKey, T> ToDictionary<T, TKey>(this IEnumerable<T> items, Func<T, TKey> keySelector, DictionaryDistinctMode distinctMode, IEqualityComparer<TKey> comparer = null)
+        {
+            var dic = new Dictionary<TKey, T>(comparer);
+
+            foreach (var item in items)
+            {
+                var key = keySelector(item);
+
+                if (distinctMode == DictionaryDistinctMode.LastFound || !dic.ContainsKey(key))
+                {
+                    dic[key] = item;
+                }
+            }
+
+            return dic;
+        }
+
+        public static Dictionary<TKey, TValue> ToDictionary<T, TKey, TValue>(this IEnumerable<T> items, Func<T, TKey> keySelector, Func<T, TValue> valueSelector, DictionaryDistinctMode distinctMode = DictionaryDistinctMode.LastFound, IEqualityComparer<TKey> comparer = null)
+        {
+            var dic = new Dictionary<TKey, TValue>(comparer);
+
+            foreach (var item in items)
+            {
+                var key = keySelector(item);
+
+                if (distinctMode == DictionaryDistinctMode.LastFound || !dic.ContainsKey(key))
+                {
+                    dic[key] = valueSelector(item);
+                }
+            }
+
+            return dic;
+        }
+
+        public static Queue<T> ToQueue<T>(this IEnumerable<T> items)
+        {
+            return new Queue<T>(items);
+        }
+
+        public static Stack<T> ToStack<T>(this IEnumerable<T> items)
+        {
+            return new Stack<T>(items);
+        }
+
         public static IEnumerable<T> TrimNull<T>(this IEnumerable<T> items)
         {
             return items.Where(item => item != null);
         }
     }
+
+    #region enum DictionaryDistinctMode
+    public enum DictionaryDistinctMode
+    {
+        FirstFound,
+        LastFound
+    }
+    #endregion
 }

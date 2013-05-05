@@ -266,12 +266,18 @@ var rb;
             var v = Math.floor(this.getDayOfWeek() - dayOfWeek);
             return this.addDays(v >= 0 ? 7 - v : -v);
         };
+        DateTime.prototype.getNextDayOrValue = function (dayOfWeek) {
+            return this.getDayOfWeek() == dayOfWeek ? this : this.getNextDay(dayOfWeek);
+        };
         DateTime.getNow = function getNow() {
             return DateTime.fromNativeDate(new Date());
         };
         DateTime.prototype.getPeviousDay = function (dayOfWeek) {
             var v = Math.floor(dayOfWeek - this.getDayOfWeek());
             return this.addDays(v >= 0 ? v - 7 : v);
+        };
+        DateTime.prototype.getPreviousDayOrValue = function (dayOfWeek) {
+            return this.getDayOfWeek() == dayOfWeek ? this : this.getPeviousDay(dayOfWeek);
         };
         DateTime.prototype.getSecond = function () {
             return Math.floor(this.ms / 1000) % 60;
@@ -370,3 +376,4 @@ var rb;
     })();
     rb.TimeSpan = TimeSpan;    
 })(rb || (rb = {}));
+//@ sourceMappingURL=rebuild.js.map

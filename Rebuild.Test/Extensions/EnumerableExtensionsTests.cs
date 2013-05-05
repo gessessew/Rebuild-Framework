@@ -1,15 +1,30 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Rebuild.Extensions
-{ 
+{
+    public class StringCollection : List<String>
+    { }
+
+
     [TestClass]
     public class EnumerableExtensionsTests
     {
+        [TestMethod]
+        public void AddTo()
+        {
+            new[] { 1, 2, 3 }
+                .AddTo(new List<int>())
+                .Collection
+                .AssertSequenceEqual(1, 2, 3);
+        }
+
         [TestMethod]
         public void Concat()
         {
@@ -59,6 +74,17 @@ namespace Rebuild.Extensions
             var array = new[] { 1, 2, 1 };
             array.LastIndexOfAny(1, 0).AssertEqual(2);
             array.LastIndexOfAny(0, 4).AssertEqual(-1);
+        }
+
+        [TestMethod]
+        public void RemoveFrom()
+        {
+            var list = new List<int> { 1, 2, 3 };
+
+            Enumerable.Range(2, 2)
+                .RemoveFrom(list)
+                .Collection
+                .AssertSequenceEqual(1);
         }
     }
 }

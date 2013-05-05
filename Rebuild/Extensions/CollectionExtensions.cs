@@ -6,46 +6,76 @@ namespace Rebuild.Extensions
 {
     public static class CollectionExtensions
     {
-        public static ICollection<T> AddIfNotExists<T>(this ICollection<T> collection, T item, IEqualityComparer<T> comparer = null)
+        public static AddIfNotExistsResult<T> AddIfNotExists<T>(this ICollection<T> collection, T item, IEqualityComparer<T> comparer = null)
         {
-            if (!collection.Contains(item, comparer))
-                collection.Add(item);
+            var isAdded = !collection.Contains(item, comparer);
 
-            return collection;
-        }
-
-        public static ICollection<T> AddIfNotExists<T>(this ICollection<T> collection, Func<T, bool> predicate, T item)
-        {
-            if (!collection.Any(predicate))
-                collection.Add(item);
-
-            return collection;
-        }
-
-        public static ICollection<T> AddRange<T>(this ICollection<T> collection, IEnumerable<T> itemsToAdd)
-        {
-            if (itemsToAdd != null)
+            if (isAdded)
             {
-                foreach (var item in itemsToAdd)
-                {
-                    collection.Add(item);
-                }
+                collection.Add(item);
             }
 
-            return collection;
+            return new AddIfNotExistsResult<T>(item, collection, isAdded);
         }
 
-        public static ICollection<T> RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> itemsToRemove)
+        public static AddRangeResult<T> AddRange<T>(this ICollection<T> collection, IEnumerable<T> itemsToAdd)
         {
-            if (itemsToRemove != null)
+            var array = itemsToAdd.EmptyIfNull().ToArray();
+
+            for (var i = 0; i < array.Length; i++)
             {
-                foreach (var item in itemsToRemove)
-                {
-                    collection.Remove(item);
-                }
+                collection.Add(array[i]);
             }
 
-            return collection;
+            return new AddRangeResult<T>(collection, array);
+        }
+
+        public static AddRangeResult<T> AddRangeIfNotExists<T>(this ICollection<T> collection, IEnumerable<T> itemsToAdd, IEqualityComparer<T> comparer = null)
+        {
+            var array = itemsToAdd.Except(collection, comparer).ToArray();
+
+            for (var i = 0; i < array.Length; i++)
+            {
+                collection.Add(array[i]);
+            }
+
+            return new AddRangeResult<T>(collection, array);
+        }
+
+        public static RemoveRangeResult<T> RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> itemsToRemove)
+        {
+            var array = itemsToRemove.EmptyIfNull().ToArray();
+
+            for (var i = 0; i < array.Length; i++)
+            {
+                collection.Remove(array[i]);
+            }
+
+            return new RemoveRangeResult<T>(collection, array);
+        }
+
+        public static RemoveRangeResult<T> RemoveRange<T>(this ICollection<T> collection, Func<T, bool> predicate)
+        {
+            var array = collection.Where(predicate).ToArray();
+
+            for (var i = 0; i < array.Length; i++)
+            {
+                collection.Remove(array[i]);
+            }
+
+            return new RemoveRangeResult<T>(collection, array);
+        }
+
+        public static RemoveRangeResult<T> RemoveRange<T>(this ICollection<T> collection, int startIndex, int count = int.MaxValue)
+        {
+            var array = collection.Skip(startIndex).Take(count).ToArray();
+
+            for (var i = 0; i < array.Length; i++)
+            {
+                collection.Remove(array[i]);
+            }
+
+            return new RemoveRangeResult<T>(collection, array);
         }
     }
 }

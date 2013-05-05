@@ -22,26 +22,31 @@ namespace Rebuild.Extensions
             array
                 .ToList()
                 .BinaryInsert(2)
+                .List
                 .AssertSequenceEqual(1, 2, 3, 4 );
 
             array
                 .ToList()
                 .BinaryInsert(3, insertStrategy: BinaryInsertStrategy.DoNothingIfFound)
+                .List
                 .AssertSequenceEqual(array);
 
             array
                 .ToList()
                 .BinaryInsert(3, insertStrategy: BinaryInsertStrategy.Replace)
+                .List
                 .AssertSequenceEqual(array);
 
             array
                 .ToList()
                 .BinaryInsert(4, insertStrategy: BinaryInsertStrategy.InsertAfter)
+                .List
                 .AssertSequenceEqual(1, 3, 4, 4);
 
             array
                 .ToList()
                 .BinaryInsert(1, insertStrategy: BinaryInsertStrategy.InsertBefore)
+                .List
                 .AssertSequenceEqual(1, 1, 3, 4);
 
         }
@@ -53,12 +58,14 @@ namespace Rebuild.Extensions
 
             array
                 .ToList()
-                .Do(list => list.BinaryRemove(3).AssertEqual(true))
-                .AssertSequenceEqual(1, 4);
+                .BinaryRemove(3)
+                .With(r => r.IsItemRemoved.AssertEqual(true))
+                .With(r => r.List.AssertSequenceEqual(1, 4));
 
             array
                 .ToList()
                 .BinaryRemove(2)
+                .IsItemRemoved
                 .AssertEqual(false);
 
         }

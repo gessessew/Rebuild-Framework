@@ -271,6 +271,10 @@ module rb {
             return this.addDays(v >= 0 ? 7 - v : -v);
         }
 
+        getNextDayOrValue(dayOfWeek: DayOfWeek) {
+            return this.getDayOfWeek() == dayOfWeek ? this : this.getNextDay(dayOfWeek);
+        }
+
         static getNow() {
             return DateTime.fromNativeDate(new Date());
         }
@@ -278,6 +282,10 @@ module rb {
         getPeviousDay(dayOfWeek: DayOfWeek) {
             var v = Math.floor(dayOfWeek - this.getDayOfWeek());
             return this.addDays(v >= 0 ? v - 7 : v);
+        }
+
+        getPreviousDayOrValue(dayOfWeek: DayOfWeek) {
+            return this.getDayOfWeek() == dayOfWeek ? this : this.getPeviousDay(dayOfWeek);
         }
 
         getSecond() {
