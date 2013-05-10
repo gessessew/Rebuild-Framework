@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Rebuild.Extensions
 {
-    public static class StringExtensions
+    public static partial class StringExtensions
     {
         public static bool EqualsCulture(this string s, string other)
         {

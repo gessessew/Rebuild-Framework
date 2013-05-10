@@ -6,63 +6,74 @@ using System.Threading;
 
 namespace Rebuild.Utils
 {
-    public partial class MemoizeBuilder<TArg>
+    public partial class MemoizeBuilder<TArg, TResult>
     {
         private int _capacity;
         private IEqualityComparer<TArg> _comparer;
-        private TimeSpan _expiration;
+        private Func<TArg, TResult, DateTime, bool> _expiration;
         private bool _threadSafe;
 
         public MemoizeBuilder()
         {
             _capacity = int.MaxValue;
-            _expiration = TimeSpan.MaxValue;
         }
 
-        internal Func<TArg, TResult> Build<TResult>(Func<TArg, TResult> factory)
+        internal Func<TArg, TResult> Build(Func<TArg, TResult> factory)
         {
+            var threadSafe = _threadSafe;
+#if NETFX
+            if (_threadLocal && threadSafe)
+            {
+                factory = SynchronizeFunc(factory);
+            }
+#endif
             var comparer = _comparer ?? EqualityComparer<TArg>.Default;
             Func<TArg, TResult> result;
 
             if (_capacity == 1)
             {
-                var provider = CreateSingleValue<TResult>();
+                var provider = CreateSingleValue();
                 result = Memoizer.MemoizeOneInternal(factory, _expiration, comparer, provider);
             }
             else
             {
-                var provider = CreateMultiValue<TResult>(comparer);
+                var provider = CreateMultiValue(comparer);
                 result = Memoizer.MemoizeInternal(factory, _expiration, _capacity, provider);
+            }
+
+            if (threadSafe)
+            {
+                result = SynchronizeFunc(factory);
             }
 
             return result;
         }
 
-        private Func<Memoizer.SingleContainer<TArg, TResult>> CreateSingleValue<TResult>()
+        private Func<Memoizer.SingleContainer<TArg, TResult>> CreateSingleValue()
         {
 #if NETFX
             if (_threadLocal)
             {
-                return CreateSingleValueThreadLocal<TResult>();
+                return CreateSingleValueThreadLocal();
             }
 #endif
             var container = new Memoizer.SingleContainer<TArg, TResult>();
             return () => container;
         }
 
-        private Func<Memoizer.MultiContainer<TArg, TResult>> CreateMultiValue<TResult>(IEqualityComparer<TArg> comparer)
+        private Func<Memoizer.MultiContainer<TArg, TResult>> CreateMultiValue(IEqualityComparer<TArg> comparer)
         {
 #if NETFX
             if (_threadLocal)
             {
-                return CreateMultiValueThreadLocal<TResult>(comparer);
+                return CreateMultiValueThreadLocal(comparer);
             }
 #endif
-            var container = new Memoizer.MultiContainer<TArg, TResult>(comparer, _capacity);
+            var container = new Memoizer.MultiContainer<TArg, TResult>(comparer);
             return () => container;
         }
 
-        public MemoizeBuilder<TArg> Capacity(int capacity)
+        public MemoizeBuilder<TArg, TResult> Capacity(int capacity)
         {
             if (capacity < 1)
             {
@@ -73,19 +84,25 @@ namespace Rebuild.Utils
             return this;
         }
 
-        public MemoizeBuilder<TArg> Comparer(IEqualityComparer<TArg> comparer)
+        public MemoizeBuilder<TArg, TResult> Comparer(IEqualityComparer<TArg> comparer)
         {
             _comparer = comparer;
             return this;
         }
 
-        public MemoizeBuilder<TArg> Expiration(TimeSpan expiration)
+        public MemoizeBuilder<TArg, TResult> Expiration(TimeSpan expiration)
+        {
+            _expiration = (arg, result, time) => time.Add(expiration) <= DateTime.UtcNow;
+            return this;
+        }
+
+        public MemoizeBuilder<TArg, TResult> Expiration(Func<TArg, TResult, DateTime, bool> expiration)
         {
             _expiration = expiration;
             return this;
         }
 
-        private static Func<TArg, TResult> SynchronizeFunc<TResult>(Func<TArg, TResult> func)
+        private static Func<TArg, TResult> SynchronizeFunc(Func<TArg, TResult> func)
         {
             var gate = new object();
 
@@ -98,7 +115,7 @@ namespace Rebuild.Utils
             };
         }
 
-        public MemoizeBuilder<TArg> ThreadSafe()
+        public MemoizeBuilder<TArg, TResult> ThreadSafe()
         {
             _threadSafe = true;
             return this;

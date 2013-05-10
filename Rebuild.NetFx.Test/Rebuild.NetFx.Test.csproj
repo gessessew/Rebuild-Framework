@@ -70,10 +70,6 @@
       <Project>{3e1a057f-22e6-4eaa-be34-361334130dae}</Project>
       <Name>Rebuild.Test</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rebuild\Rebuild.csproj">
-      <Project>{3f0f67f1-b5ba-4043-b7f1-68e9e4558ce5}</Project>
-      <Name>Rebuild</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

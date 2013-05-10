@@ -25,6 +25,25 @@ namespace Rebuild.Utils
         }
 
         [TestMethod]
+        public void MemoizeCapacity()
+        {
+            int i = 1;
+            var a = new object();
+            var b = new object();
+            var c = new object();
+
+            var func = Memoizer.Memoize((object o) => i++, v => v.Capacity(2));
+
+            func(a).AssertEqual(1);
+            func(a).AssertEqual(1);
+            func(b).AssertEqual(2);
+            func(b).AssertEqual(2);
+            func(a).AssertEqual(1);
+            func(c).AssertEqual(3);
+            func(a).AssertEqual(4);
+        }
+
+        [TestMethod]
         public void MemoizeOne()
         {
             int i = 1;

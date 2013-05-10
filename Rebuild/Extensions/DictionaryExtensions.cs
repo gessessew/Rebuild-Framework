@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Rebuild.Extensions
 {
-    public static class DictionaryExtensions
+    public static partial class DictionaryExtensions
     {
         public static AddIfNotExistsResult<TKey, TValue> AddIfNotExists<TKey, TValue>(this IDictionary<TKey, TValue> dic, KeyValuePair<TKey, TValue> keyValuePair)
         {

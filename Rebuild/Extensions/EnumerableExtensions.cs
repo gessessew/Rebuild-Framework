@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Rebuild.Extensions
 {
-    public static class EnumerableExtensions
+    public static partial class EnumerableExtensions
     {
         public static AddToResult<T, TCollection> AddTo<T, TCollection>(this IEnumerable<T> items, TCollection collection) where TCollection : ICollection<T>
         {

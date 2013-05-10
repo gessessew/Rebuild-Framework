@@ -2,7 +2,7 @@
 
 namespace Rebuild.Extensions
 {
-    public static class ObjectExtensions
+    public static partial class ObjectExtensions
     {
         public static TValue SelectOrDefault<T, TValue>(this T obj, Func<T, TValue> selector, TValue defaultValue = default(TValue))
         {
