@@ -20,14 +20,22 @@ namespace Rebuild.Extensions
 
         public static AddRangeResult<T> AddRange<T>(this ICollection<T> collection, IEnumerable<T> itemsToAdd)
         {
-            var array = itemsToAdd.EmptyIfNull().ToArray();
+            return AddRange(collection, itemsToAdd.EmptyIfNull().ToArray());
+        }
 
-            for (var i = 0; i < array.Length; i++)
+        public static AddRangeResult<T> AddRange<T>(this ICollection<T> collection, params T[] itemsToAdd)
+        {
+            if (itemsToAdd == null)
             {
-                collection.Add(array[i]);
+                itemsToAdd = new T[0];
             }
 
-            return new AddRangeResult<T>(collection, array);
+            for (var i = 0; i < itemsToAdd.Length; i++)
+            {
+                collection.Add(itemsToAdd[i]);
+            }
+
+            return new AddRangeResult<T>(collection, itemsToAdd);
         }
 
         public static AddRangeResult<T> AddRangeIfNotExists<T>(this ICollection<T> collection, IEnumerable<T> itemsToAdd, IEqualityComparer<T> comparer = null)
@@ -42,16 +50,29 @@ namespace Rebuild.Extensions
             return new AddRangeResult<T>(collection, array);
         }
 
+        public static AddRangeResult<T> AddRangeIfNotExists<T>(this ICollection<T> collection, IEqualityComparer<T> comparer = null, params T[] itemsToAdd)
+        {
+            return AddRangeIfNotExists(collection, (IEnumerable<T>)itemsToAdd, comparer);
+        }
+
         public static RemoveRangeResult<T> RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> itemsToRemove)
         {
-            var array = itemsToRemove.EmptyIfNull().ToArray();
+            return RemoveRange(collection, itemsToRemove.EmptyIfNull().ToArray());
+        }
 
-            for (var i = 0; i < array.Length; i++)
+        public static RemoveRangeResult<T> RemoveRange<T>(this ICollection<T> collection, params T[] itemsToRemove)
+        {
+            if (itemsToRemove == null)
             {
-                collection.Remove(array[i]);
+                itemsToRemove = new T[0];
             }
 
-            return new RemoveRangeResult<T>(collection, array);
+            for (var i = 0; i < itemsToRemove.Length; i++)
+            {
+                collection.Remove(itemsToRemove[i]);
+            }
+
+            return new RemoveRangeResult<T>(collection, itemsToRemove);
         }
 
         public static RemoveRangeResult<T> RemoveRange<T>(this ICollection<T> collection, Func<T, bool> predicate)

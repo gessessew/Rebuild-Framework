@@ -13,7 +13,7 @@ namespace Rebuild.Utils
         private Func<TArg, TResult, DateTime, bool> _expiration;
         private bool _threadSafe;
 
-        public MemoizeBuilder()
+        internal MemoizeBuilder()
         {
             _capacity = int.MaxValue;
         }
