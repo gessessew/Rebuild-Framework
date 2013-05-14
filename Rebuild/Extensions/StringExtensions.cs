@@ -26,6 +26,21 @@ namespace Rebuild.Extensions
             return string.Equals(s, other, StringComparison.Ordinal);
         }
 
+        public static bool EndsWithCulture(this string s, string value)
+        {
+            return s.EndsWith(value, StringComparison.CurrentCulture);
+        }
+
+        public static bool EndsWithCultureIgnoreCase(this string s, string value)
+        {
+            return s.EndsWith(value, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool EndsWithIgnoreCase(this string s, string value)
+        {
+            return s.EndsWith(value, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static string FormatCulture(this string format, object arg0)
         {
             return string.Format(format, arg0);
@@ -71,6 +86,52 @@ namespace Rebuild.Extensions
             return !string.IsNullOrWhiteSpace(s);
         }
 
+        public static int IndexOfCulture(this string s, string value, int startIndex = 0, int count = int.MaxValue)
+        {
+            return s.IndexOfInternal(value, startIndex, count, StringComparison.CurrentCulture);
+        }
+
+        public static int IndexOfCultureIgnoreCase(this string s, string value, int startIndex = 0, int count = int.MaxValue)
+        {
+            return s.IndexOfInternal(value, startIndex, count, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static int IndexOfIgnoreCase(this string s, string value, int startIndex = 0, int count = int.MaxValue)
+        {
+            return s.IndexOfInternal(value, startIndex, count, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static int IndexOfInternal(this string s, string value, int startIndex, int count, StringComparison comparison)
+        {
+            startIndex = Math.Max(Math.Min(startIndex, s.Length - 1), 0);
+            count = Math.Max(Math.Min(count, s.Length - startIndex), 0);
+
+            return count == 0 ? -1 : s.IndexOf(value, startIndex, count, comparison);
+        }
+
+        public static int LastIndexOfCulture(this string s, string value, int startIndex = 0, int count = int.MaxValue)
+        {
+            return s.LastIndexOfInternal(value, startIndex, count, StringComparison.CurrentCulture);
+        }
+
+        public static int LastIndexOfCultureIgnoreCase(this string s, string value, int startIndex = 0, int count = int.MaxValue)
+        {
+            return s.LastIndexOfInternal(value, startIndex, count, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static int LastIndexOfIgnoreCase(this string s, string value, int startIndex = 0, int count = int.MaxValue)
+        {
+            return s.LastIndexOfInternal(value, startIndex, count, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static int LastIndexOfInternal(this string s, string value, int startIndex, int count, StringComparison comparison)
+        {
+            startIndex = Math.Max(Math.Min(startIndex, s.Length - 1), 0);
+            count = Math.Max(Math.Min(count, s.Length - startIndex), 0);
+
+            return count == 0 ? -1 : s.LastIndexOf(value, startIndex, count, comparison);
+        }
+
         public static string Left(this string s, int maxLength)
         {
             return s.Substring(0, Math.Min(s.Length, maxLength));
@@ -86,19 +147,51 @@ namespace Rebuild.Extensions
             return s ?? string.Empty;
         }
 
+        public static T SelectHasValue<T>(this string s, Func<string, T> func, T defaultValue = default(T))
+        {
+            return s.HasValue() ? func(s) : defaultValue;
+        }
+
+        public static bool StartsWithCulture(this string s, string value)
+        {
+            return s.StartsWith(value, StringComparison.CurrentCulture);
+        }
+
+        public static bool StartsWithCultureIgnoreCase(this string s, string value)
+        {
+            return s.StartsWith(value, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool StartsWithIgnoreCase(this string s, string value)
+        {
+            return s.StartsWith(value, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static string Substr(this string s, int startIndex, int endIndex)
         {
             return s.Substring(startIndex, endIndex - startIndex);
         }
 
-        public static byte[] ToBytes(this string s, Encoding encoding = null)
-        {
-            return (encoding ?? Encoding.UTF8).GetBytes(s);
-        }
-
         public static byte[] ToBase64Bytes(this string s)
         {
             return Convert.FromBase64String(s);
+        }
+
+        public static bool ToBoolean(this string s, bool defaultValue = false)
+        {
+            bool v;
+            return bool.TryParse(s, out v) ? v : defaultValue;
+        }
+
+        public static bool? ToBooleanNull(this string s, bool? defaultValue = null)
+        {
+            bool v;
+            return bool.TryParse(s, out v) ? v : defaultValue;
+        }
+
+        public static byte[] ToBytes(this string s, Encoding encoding = null)
+        {
+            return (encoding ?? Encoding.UTF8).GetBytes(s);
         }
 
         public static DateTime ToDateTime(this string s, DateTime defaultValue = default(DateTime), IFormatProvider provider = null, DateTimeStyles style = DateTimeStyles.None)
