@@ -137,6 +137,21 @@ namespace Rebuild.Extensions
     }
     #endregion
 
+    #region struct EnqueueRangeResult<T>
+    public struct EnqueueRangeResult<T>
+    {
+        public EnqueueRangeResult(Queue<T> queue, T[] items)
+            : this()
+        {
+            Queue = queue;
+            Items = items;
+        }
+
+        public T[] Items { get; private set; }
+        public Queue<T> Queue { get; private set; }
+    }
+    #endregion
+
     #region struct MoveResult<T, TCollection>
     public struct MoveResult<T, TCollection>
     {
@@ -153,6 +168,21 @@ namespace Rebuild.Extensions
         public T[] MovedItems { get; private set; }
 
         public ICollection<T> Source { get; private set; }
+    }
+    #endregion
+
+    #region struct PushRangeResult<T>
+    public struct PushRangeResult<T>
+    {
+        public PushRangeResult(Stack<T> stack, T[] items)
+            : this()
+        {
+            Stack = stack;
+            Items = items;
+        }
+
+        public T[] Items { get; private set; }
+        public Stack<T> Stack { get; private set; }
     }
     #endregion
 

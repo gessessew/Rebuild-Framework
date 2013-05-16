@@ -104,8 +104,14 @@
     <Compile Include="..\Rebuild\Extensions\ObjectExtensions.cs">
       <Link>Extensions\ObjectExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Extensions\QueueExtensions.cs">
+      <Link>Extensions\QueueExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\Extensions\Results.cs">
       <Link>Extensions\Results.cs</Link>
+    </Compile>
+    <Compile Include="..\Rebuild\Extensions\StackExtensions.cs">
+      <Link>Extensions\StackExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Rebuild\Extensions\StreamExtensions.cs">
       <Link>Extensions\StreamExtensions.cs</Link>
