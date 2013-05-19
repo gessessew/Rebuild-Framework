@@ -9,8 +9,7 @@ namespace Rebuild.Extensions
         {
             if (comparer == null)
             {
-                comparer = (dic as Dictionary<string, string>)
-                    .SelectOrDefault(d => d.Comparer) ?? EqualityComparer<string>.Default;
+                comparer = (dic as Dictionary<string, string>).IfNotNull(d => d.Comparer) ?? EqualityComparer<string>.Default;
             }
 
             var nvc = new NameValueCollection(comparer.ToUnTypedEqualityComparer());

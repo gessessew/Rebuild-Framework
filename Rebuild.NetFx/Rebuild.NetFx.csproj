@@ -62,6 +62,9 @@
     <Compile Include="..\Rebuild\Extensions\ArrayExtensions.cs">
       <Link>Extensions\ArrayExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Extensions\AssemblyExtensions.cs">
+      <Link>Extensions\AssemblyExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\Extensions\BytesExtensions.cs">
       <Link>Extensions\BytesExtensions.cs</Link>
     </Compile>
@@ -101,6 +104,9 @@
     <Compile Include="..\Rebuild\Extensions\ListExtensions.cs">
       <Link>Extensions\ListExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Extensions\MemberInfoExtensions.cs">
+      <Link>Extensions\MemberInfoExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\Extensions\ObjectExtensions.cs">
       <Link>Extensions\ObjectExtensions.cs</Link>
     </Compile>
@@ -134,6 +140,9 @@
     <Compile Include="..\Rebuild\Utils\Memoizer.cs">
       <Link>Utils\Memoizer.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Xml\XmlNs.cs">
+      <Link>Xml\XmlNs.cs</Link>
+    </Compile>
     <Compile Include="Extensions\CancellationTokenExtensions.cs" />
     <Compile Include="Extensions\DataReaderExtensions.cs" />
     <Compile Include="Extensions\DbCommandExtensions.cs" />
@@ -144,6 +153,8 @@
     <Compile Include="Extensions\StringExtensions.NetFx.cs" />
     <Compile Include="Extensions\Wcf\ServiceHostExtensions.cs" />
     <Compile Include="Extensions\X509Certificate2Extensions.cs" />
+    <Compile Include="Extensions\XmlNamespaceManagerExtensions.cs" />
+    <Compile Include="Extensions\XNamespaceExtensions.cs" />
     <Compile Include="Utils\MemoizeBuilder.NetFx.cs" />
     <Compile Include="Utils\Memoizer.NetFx.cs" />
     <Compile Include="Utils\QueryStringBuilder.cs" />
@@ -158,9 +169,11 @@
     <Compile Include="Utils\Sizes.cs" />
     <Compile Include="Utils\Tasks.cs" />
     <Compile Include="Wcf\InternationalizationAttribute.cs" />
+    <Compile Include="Xml\XNamespaces.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="Extensions\XNodeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

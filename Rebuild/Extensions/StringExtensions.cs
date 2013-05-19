@@ -6,6 +6,29 @@ namespace Rebuild.Extensions
 {
     public static partial class StringExtensions
     {
+        /// <summary>
+        /// Provide an empty string if the specified string is null.
+        /// </summary>
+        public static string EmptyIfNull(this string s)
+        {
+            return s ?? string.Empty;
+        }
+
+        public static bool EndsWithCulture(this string s, string value)
+        {
+            return s.EndsWith(value, StringComparison.CurrentCulture);
+        }
+
+        public static bool EndsWithCultureIgnoreCase(this string s, string value)
+        {
+            return s.EndsWith(value, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool EndsWithIgnoreCase(this string s, string value)
+        {
+            return s.EndsWith(value, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static bool EqualsCulture(this string s, string other)
         {
             return string.Equals(s, other, StringComparison.CurrentCultureIgnoreCase);
@@ -26,29 +49,14 @@ namespace Rebuild.Extensions
             return string.Equals(s, other, StringComparison.Ordinal);
         }
 
-        public static bool EndsWithCulture(this string s, string value)
+        public static string GetValueWhenEmpty(this string s, Func<string> func)
         {
-            return s.EndsWith(value, StringComparison.CurrentCulture);
+            return s.HasValue() ? s : func();
         }
 
-        public static bool EndsWithCultureIgnoreCase(this string s, string value)
+        public static string GetValueWhenEmpty(this string s, string fallback)
         {
-            return s.EndsWith(value, StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        public static bool EndsWithIgnoreCase(this string s, string value)
-        {
-            return s.EndsWith(value, StringComparison.OrdinalIgnoreCase);
-        }
-
-        public static string FormatCulture(this string format, params object[] args)
-        {
-            return string.Format(format, args);
-        }
-
-        public static string FormatInvariant(this string format, params object[] args)
-        {
-            return string.Format(CultureInfo.InvariantCulture, format, args);
+            return s.HasValue() ? s : fallback;
         }
 
         public static bool HasValue(this string s)
@@ -77,6 +85,21 @@ namespace Rebuild.Extensions
             count = Math.Max(Math.Min(count, s.Length - startIndex), 0);
 
             return count == 0 ? -1 : s.IndexOf(value, startIndex, count, comparison);
+        }
+
+        public static T IfHasValue<T>(this string s, Func<string, T> func, T defaultValue = default(T))
+        {
+            return s.HasValue() ? func(s) : defaultValue;
+        }
+
+        public static string IfNoValue(this string s, Func<string> provider)
+        {
+            return s.HasValue() ? s : provider();
+        }
+
+        public static string IfNoValue(this string s, string defaultValue = null)
+        {
+            return s.HasValue() ? s : defaultValue;
         }
 
         public static int LastIndexOfCulture(this string s, string value, int startIndex = 0, int count = int.MaxValue)
@@ -110,16 +133,6 @@ namespace Rebuild.Extensions
         public static string Right(this string s, int maxLength)
         {
             return s.Substring(Math.Max(s.Length - maxLength, 0));
-        }
-
-        public static string Safe(this string s)
-        {
-            return s ?? string.Empty;
-        }
-
-        public static T SelectHasValue<T>(this string s, Func<string, T> func, T defaultValue = default(T))
-        {
-            return s.HasValue() ? func(s) : defaultValue;
         }
 
         public static bool StartsWithCulture(this string s, string value)
