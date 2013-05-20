@@ -17,6 +17,15 @@ namespace Rebuild.Extensions
             return stream;
         }
 
+        public static byte[] ToArray(this Stream stream)
+        {
+            var data = new byte[stream.Length];
+
+            stream.Read(data, 0, data.Length);
+
+            return data;
+        }
+
         public static WrappedStream WrapStream(this Stream stream)
         {
             return new WrappedStream(stream);

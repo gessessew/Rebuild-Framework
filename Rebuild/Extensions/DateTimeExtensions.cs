@@ -51,6 +51,11 @@ namespace Rebuild.Extensions
             return date.GetValueOrDefault() != default(DateTime);
         }
 
+        public static bool IsWeekend(this DateTime value)
+        {
+            return value.DayOfWeek == DayOfWeek.Sunday || value.DayOfWeek == DayOfWeek.Saturday;
+        }
+
         public static DateTime LastDayOfMonth(this DateTime value)
         {
             return value.FirstDayOfMonth().AddMonths(1).AddDays(-1);
@@ -92,6 +97,11 @@ namespace Rebuild.Extensions
         public static long ToJavascriptMilliseconds(this DateTime value)
         {
             return (long)(value.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+        }
+
+        public static long ToUnixTimestamp(this DateTime date)
+        {
+            return (long)(date - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
         }
 
         public static int WeekOfYear(this DateTime value, CalendarWeekRule rule = CalendarWeekRule.FirstDay, DayOfWeek firstDayOfWeek = DayOfWeek.Sunday)

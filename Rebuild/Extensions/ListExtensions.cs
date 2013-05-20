@@ -90,6 +90,21 @@ namespace Rebuild.Extensions
             return ~index;
         }
 
+        public static IList<T> Shuffle<T>(this IList<T> items, Random random = null)
+        {
+            if (random == null)
+            {
+                random = new Random((int)DateTime.Now.Ticks);
+            }
+
+            for (int i = items.Count - 1; i > 0; i--)
+            {
+                items.Swap(i, random.Next(0, i - 1));
+            }
+
+            return items;
+        }
+
         public static IList<T> Swap<T>(this IList<T> list, int index1, int index2)
         {
             var item = list[index1];

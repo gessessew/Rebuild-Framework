@@ -146,6 +146,31 @@ namespace Rebuild.Extensions
             return s.Substring(0, Math.Min(s.Length, maxLength));
         }
 
+        public static string Replace(this string s, string oldValue, string newValue, StringComparison comparisonType)
+        {
+            var startIndex = 0;
+
+            while (true)
+            {
+                startIndex = s.IndexOf(oldValue, startIndex, comparisonType);
+
+                if (startIndex < 0)
+                {
+                    break;
+                }
+
+                s = string.Concat(s.Substring(0, startIndex), newValue, s.Substring(startIndex + oldValue.Length));
+                startIndex += newValue.Length;
+            }
+
+            return s;
+        }
+
+        public static string ReplaceIgnoreCase(this string s, string oldValue, string newValue, StringComparison comparisonType)
+        {
+            return s.Replace(oldValue, newValue, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static string Right(this string s, int maxLength)
         {
             return s.Substring(Math.Max(s.Length - maxLength, 0));

@@ -386,6 +386,16 @@ namespace Rebuild.Extensions
             return second == null ? items : second.Concat(items);
         }
 
+        public static IEnumerable<T> Randomize<T>(this IEnumerable<T> items, Random random = null)
+        {
+            if (random == null)
+            {
+                random = new Random((int)DateTime.Now.Ticks);
+            }
+
+            return items.OrderBy(x => random.Next());
+        }
+
         public static RemoveFromResult<T, TCollection> RemoveFrom<T, TCollection>(this IEnumerable<T> items, TCollection collection) where TCollection : ICollection<T>
         {
             return new RemoveFromResult<T, TCollection>(collection.RemoveRange(items).RemovedItems, collection);
