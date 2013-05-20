@@ -152,6 +152,7 @@
     <Compile Include="..\Rebuild\Xml\XNamespaces.cs">
       <Link>Xml\XNamespaces.cs</Link>
     </Compile>
+    <Compile Include="Extensions\BytesExtensions.NetFx.cs" />
     <Compile Include="Extensions\CancellationTokenExtensions.cs" />
     <Compile Include="Extensions\DataReaderExtensions.cs" />
     <Compile Include="Extensions\DbCommandExtensions.cs" />

@@ -29,6 +29,16 @@ namespace Rebuild.Extensions
             }
         }
 
+        public static string HtmlDecode(this string s)
+        {
+            return HttpUtility.HtmlDecode(s);
+        }
+
+        public static string HtmlEncode(this string s)
+        {
+            return HttpUtility.HtmlEncode(s);
+        }
+
         public static NameValueCollection ParseQueryString(this string query)
         {
             return HttpUtility.ParseQueryString(query);
@@ -55,6 +65,16 @@ namespace Rebuild.Extensions
                 query = query.Left(query.Length - 1);
 
             return new QueryStringBuilder(query, query.IndexOf('?') > -1);
+        }
+
+        public static string UrlDecode(this string s)
+        {
+            return HttpUtility.UrlDecode(s);
+        }
+
+        public static string UrlEncode(this string s)
+        {
+            return HttpUtility.UrlEncode(s);
         }
     }
 }

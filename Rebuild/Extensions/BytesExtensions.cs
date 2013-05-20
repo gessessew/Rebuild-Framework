@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Rebuild.Extensions
 {
-    public static class BytesExtensions
+    public static partial class BytesExtensions
     {
         public static string ToBase64String(this byte[] buffer)
         {
