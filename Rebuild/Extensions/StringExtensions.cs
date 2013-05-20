@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
@@ -27,6 +28,31 @@ namespace Rebuild.Extensions
         public static bool EndsWithIgnoreCase(this string s, string value)
         {
             return s.EndsWith(value, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool EqualsAnyIgnoreCase(this string s, IEnumerable<string> args)
+        {
+            return s.EqualsAny(args, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public static bool EqualsAnyIgnoreCase(this string s, params string[] args)
+        {
+            return s.EqualsAny(StringComparer.OrdinalIgnoreCase, args);
+        }
+
+        public static bool EqualsAnyIgnoreCase(this string s, string s0, string s1)
+        {
+            return s.EqualsAny(s0, s1, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public static bool EqualsAnyIgnoreCase(this string s, string s0, string s1, string s2)
+        {
+            return s.EqualsAny(s0, s1, s2, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public static bool EqualsAnyIgnoreCase(this string s, string s0, string s1, string s2, string s3)
+        {
+            return s.EqualsAny(s0, s1, s2, s3, StringComparer.OrdinalIgnoreCase);
         }
 
         public static bool EqualsCulture(this string s, string other)

@@ -6,6 +6,12 @@ namespace Rebuild.Extensions
     public class StringExtensionsTests
     {
         [TestMethod]
+        public void EqualsAnyIgnoreCase()
+        {
+            "A".EqualsAnyIgnoreCase(default(string), "a").AssertEqual(true);
+        }
+
+        [TestMethod]
         public void Left()
         {
             "".Left(1).AssertEqual("");
