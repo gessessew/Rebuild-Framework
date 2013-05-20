@@ -49,16 +49,6 @@ namespace Rebuild.Extensions
             return string.Equals(s, other, StringComparison.Ordinal);
         }
 
-        public static string GetValueWhenEmpty(this string s, Func<string> func)
-        {
-            return s.HasValue() ? s : func();
-        }
-
-        public static string GetValueWhenEmpty(this string s, string fallback)
-        {
-            return s.HasValue() ? s : fallback;
-        }
-
         public static bool HasValue(this string s)
         {
             return !string.IsNullOrWhiteSpace(s);
@@ -87,9 +77,9 @@ namespace Rebuild.Extensions
             return count == 0 ? -1 : s.IndexOf(value, startIndex, count, comparison);
         }
 
-        public static T IfHasValue<T>(this string s, Func<string, T> func, T defaultValue = default(T))
+        public static T IfHasValue<T>(this string s, Func<string, T> selector, T defaultValue = default(T))
         {
-            return s.HasValue() ? func(s) : defaultValue;
+            return s.HasValue() ? selector(s) : defaultValue;
         }
 
         public static string IfNoValue(this string s, Func<string> provider)

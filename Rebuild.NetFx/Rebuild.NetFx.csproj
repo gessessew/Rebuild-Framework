@@ -98,6 +98,9 @@
     <Compile Include="..\Rebuild\Extensions\FloatExtensions.cs">
       <Link>Extensions\FloatExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Extensions\GuidExtensions.cs">
+      <Link>Extensions\GuidExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\Extensions\Int32Extensions.cs">
       <Link>Extensions\Int32Extensions.cs</Link>
     </Compile>
@@ -125,6 +128,9 @@
     <Compile Include="..\Rebuild\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Extensions\XNamespaceExtensions.cs">
+      <Link>Extensions\XNamespaceExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\IO\WrappedStream.cs">
       <Link>IO\WrappedStream.cs</Link>
     </Compile>
@@ -143,6 +149,9 @@
     <Compile Include="..\Rebuild\Xml\XmlNs.cs">
       <Link>Xml\XmlNs.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Xml\XNamespaces.cs">
+      <Link>Xml\XNamespaces.cs</Link>
+    </Compile>
     <Compile Include="Extensions\CancellationTokenExtensions.cs" />
     <Compile Include="Extensions\DataReaderExtensions.cs" />
     <Compile Include="Extensions\DbCommandExtensions.cs" />
@@ -154,7 +163,7 @@
     <Compile Include="Extensions\Wcf\ServiceHostExtensions.cs" />
     <Compile Include="Extensions\X509Certificate2Extensions.cs" />
     <Compile Include="Extensions\XmlNamespaceManagerExtensions.cs" />
-    <Compile Include="Extensions\XNamespaceExtensions.cs" />
+    <Compile Include="Extensions\XmlNodeExtensions.cs" />
     <Compile Include="Utils\MemoizeBuilder.NetFx.cs" />
     <Compile Include="Utils\Memoizer.NetFx.cs" />
     <Compile Include="Utils\QueryStringBuilder.cs" />
@@ -169,7 +178,6 @@
     <Compile Include="Utils\Sizes.cs" />
     <Compile Include="Utils\Tasks.cs" />
     <Compile Include="Wcf\InternationalizationAttribute.cs" />
-    <Compile Include="Xml\XNamespaces.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
