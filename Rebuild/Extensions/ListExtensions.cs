@@ -94,7 +94,7 @@ namespace Rebuild.Extensions
         {
             if (random == null)
             {
-                random = new Random((int)DateTime.Now.Ticks);
+                random = new Random();
             }
 
             for (int i = items.Count - 1; i > 0; i--)

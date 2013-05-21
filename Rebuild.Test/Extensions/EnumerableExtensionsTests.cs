@@ -77,6 +77,17 @@ namespace Rebuild.Extensions
         }
 
         [TestMethod]
+        public void Randomize()
+        {
+            var array = new [] { 1, 2, 3, 4, 5 };
+            array
+                .Randomize()
+                .Do(i => Console.Write(i))
+                .SequenceEqual(array)
+                .AssertEqual(false);
+        }
+
+        [TestMethod]
         public void RemoveFrom()
         {
             var list = new List<int> { 1, 2, 3 };

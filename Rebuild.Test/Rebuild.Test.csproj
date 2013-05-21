@@ -59,6 +59,7 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
+    <Compile Include="Extensions\Int32ExtensionsTests.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensionsTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />

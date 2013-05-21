@@ -69,5 +69,17 @@ namespace Rebuild.Extensions
                 .AssertEqual(false);
 
         }
+
+        [TestMethod]
+        public void Shuffle()
+        {
+            var array = new[] { 1, 2, 3, 4, 5 };
+            
+            array
+                .CloneCopy()
+                .Shuffle()
+                .SequenceEqual(array)
+                .AssertEqual(false);
+        }
     }
 }

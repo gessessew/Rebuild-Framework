@@ -8,7 +8,7 @@ namespace Rebuild.Extensions
         /// <summary>
         /// Creates a shallow copy of the <typeparamref name="System.Array"/>.
         /// </summary>
-        public static T[] Clone<T>(this T[] items)
+        public static T[] CloneCopy<T>(this T[] items)
         {
             return (T[])items.Clone();
         }
