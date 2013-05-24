@@ -12,6 +12,11 @@ namespace Rebuild.Extensions
             return assembly.GetCustomAttribute<AssemblyCompanyAttribute>().IfNotNull(a => a.Company);
         }
 
+        public static string GetCopyright(this Assembly assembly)
+        {
+            return assembly.GetCustomAttribute<AssemblyCopyrightAttribute>().IfNotNull(a => a.Copyright);
+        }
+
         public static string GetCulture(this Assembly assembly)
         {
             return assembly.GetCustomAttribute<AssemblyCultureAttribute>().IfNotNull(a => a.Culture);

@@ -58,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\FilePathTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Extensions\XNodeExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

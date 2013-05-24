@@ -128,6 +128,9 @@
     <Compile Include="..\Rebuild\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Extensions\WebResponseExtensions.cs">
+      <Link>Extensions\WebResponseExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\Extensions\XNamespaceExtensions.cs">
       <Link>Extensions\XNamespaceExtensions.cs</Link>
     </Compile>
@@ -158,13 +161,14 @@
     <Compile Include="Extensions\DbCommandExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.NetFx.cs" />
     <Compile Include="Extensions\EnumerableExtensions.NetFx.cs" />
-    <Compile Include="Extensions\IO\StringExtensions.cs" />
     <Compile Include="Extensions\RSACryptoServiceProviderExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.NetFx.cs" />
     <Compile Include="Extensions\Wcf\ServiceHostExtensions.cs" />
+    <Compile Include="Extensions\WebResponseExtensions.NetFx.cs" />
     <Compile Include="Extensions\X509Certificate2Extensions.cs" />
     <Compile Include="Extensions\XmlNamespaceManagerExtensions.cs" />
     <Compile Include="Extensions\XmlNodeExtensions.cs" />
+    <Compile Include="IO\FilePath.cs" />
     <Compile Include="Utils\MemoizeBuilder.NetFx.cs" />
     <Compile Include="Utils\Memoizer.NetFx.cs" />
     <Compile Include="Utils\QueryStringBuilder.cs" />

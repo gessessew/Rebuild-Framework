@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rebuild.IO;
 using Rebuild.Utils;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,11 @@ namespace Rebuild.Extensions
             }
 
             return b.ToString();
+        }
+
+        public static FilePath ToFilePath(this string s)
+        {
+            return new FilePath(s);
         }
 
         public static QueryStringBuilder ToQueryString(this string query)

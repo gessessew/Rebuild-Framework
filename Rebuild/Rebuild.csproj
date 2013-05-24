@@ -53,7 +53,9 @@
     <Compile Include="Extensions\EqualityComparerExtensions.cs" />
     <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="Extensions\GuidExtensions.cs" />
+    <Compile Include="Extensions\Int16Extensions.cs" />
     <Compile Include="Extensions\Int32Extensions.cs" />
+    <Compile Include="Extensions\Int64Extensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\WebResponseExtensions.cs" />
     <Compile Include="Extensions\XNamespaceExtensions.cs" />
     <Compile Include="IO\WrappedStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

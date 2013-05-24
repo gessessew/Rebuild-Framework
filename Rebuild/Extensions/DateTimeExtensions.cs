@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rebuild.Utils;
+using System;
 using System.Globalization;
 
 namespace Rebuild.Extensions
@@ -12,7 +13,17 @@ namespace Rebuild.Extensions
 
         public static DateTime Clamp(this DateTime value, DateTime minValue, DateTime maxValue)
         {
-            return value < minValue ? minValue : value > maxValue ? maxValue : value;
+            return DateTimes.Min(DateTimes.Max(value, minValue), maxValue);
+        }
+
+        public static DateTime ClamMax(this DateTime value, DateTime maxValue)
+        {
+            return DateTimes.Min(value, maxValue);
+        }
+
+        public static DateTime ClampMin(this DateTime value, DateTime minValue)
+        {
+            return DateTimes.Max(value, minValue);
         }
 
         public static DateTimeOffset DateTimeOffset(this DateTime value, TimeSpan offset = default(TimeSpan))
