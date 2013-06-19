@@ -1,10 +1,25 @@
-﻿using System;
+﻿using Rebuild.Utils;
+using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Rebuild.Extensions
 {
     public static class DataReaderExtensions
     {
+        public static IEnumerable<DataReaderFieldInfo> FieldInfos(this IDataReader dataReader, bool dispose = false)
+        {
+            using (dispose ? dataReader : null)
+            {
+                var count = dataReader.FieldCount;
+
+                for (var i = 0; i < count; i++)
+                {
+                    yield return new DataReaderFieldInfo(i, dataReader.GetName(i), dataReader.GetFieldType(i));
+                }
+            }
+        }
+
         public static byte GetByteOrDefault(this IDataReader reader, int i, byte defaultValue = 0)
         {
             return reader.IsDBNull(i) ? defaultValue : reader.GetByte(i);
@@ -108,6 +123,17 @@ namespace Rebuild.Extensions
         public static string GetStringOrDefault(this IDataReader reader, int i, string defaultValue = null)
         {
             return reader.IsDBNull(i) ? defaultValue : reader.GetString(i);
+        }
+
+        public static IEnumerable<IDataReader> ToEnumerable(this IDataReader dataReader, bool dispose = true)
+        {
+            using (dispose ? dataReader : null)
+            {
+                while (dataReader.Read())
+                {
+                    yield return dataReader;
+                }
+            }
         }
     }
 }

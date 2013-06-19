@@ -20,12 +20,12 @@ namespace Rebuild.Extensions
                 _comparer = comparer;
             }
 
-            public bool Equals(object x, object y)
+            bool IEqualityComparer.Equals(object x, object y)
             {
                 return _comparer.Equals((T)x, (T)y);
             }
 
-            public int GetHashCode(object obj)
+            int IEqualityComparer.GetHashCode(object obj)
             {
                 return _comparer.GetHashCode((T)obj);
             }

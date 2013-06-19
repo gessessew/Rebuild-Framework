@@ -28,6 +28,7 @@ namespace Rebuild.Extensions
         [TestMethod]
         public void Concat()
         {
+            new[] { 1, 2 }.Concat(3).AssertSequenceEqual(1, 2, 3);
             new[] { 1, 2 }.Concat(3, 4).AssertSequenceEqual(1, 2, 3, 4);
         }
 

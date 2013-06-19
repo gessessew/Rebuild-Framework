@@ -15,19 +15,38 @@ namespace Rebuild.Extensions
             return command;
         }
 
+        public static int ExecuteNonQuery(this IDbCommand command, string commandText)
+        {
+            command.CommandText = commandText;
+            return command.ExecuteNonQuery();
+        }
+
+        public static IDataReader ExecuteReader(this IDbCommand command, string commandText)
+        {
+            command.CommandText = commandText;
+            return command.ExecuteReader();
+        }
+
         public static IEnumerable<IDataReader> ExecuteReaderEnumerable(this IDbCommand command)
         {
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    yield return reader;
-                }
-            }
+            return command.ExecuteReader().ToEnumerable();
+        }
+
+        public static IEnumerable<IDataReader> ExecuteReaderEnumerable(this IDbCommand command, string commandText)
+        {
+            command.CommandText = commandText;
+            return command.ExecuteReader().ToEnumerable();
         }
 
         public static T ExecuteScalar<T>(this IDbCommand command, T defaultValue = default(T))
         {
+            var value = command.ExecuteScalar();
+            return value == DBNull.Value ? defaultValue : (T)value;
+        }
+
+        public static T ExecuteScalar<T>(this IDbCommand command, string commandText, T defaultValue = default(T))
+        {
+            command.CommandText = commandText;
             var value = command.ExecuteScalar();
             return value == DBNull.Value ? defaultValue : (T)value;
         }

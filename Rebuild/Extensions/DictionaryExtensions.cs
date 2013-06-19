@@ -41,6 +41,15 @@ namespace Rebuild.Extensions
             return dic == null || !dic.TryGetValue(key, out value) ? selector() : value;
         }
 
+        public static Func<TKey, TValue> Memoize<TKey, TValue>(this IDictionary<TKey, TValue> dic, Func<TKey, TValue> factory)
+        {
+            return arg =>
+            {
+                TValue value;
+                return dic.TryGetValue(arg, out value) ? value : dic[arg] = factory(arg);
+            };
+        }
+
         public static IDictionary<TKey, TValue> RemoveKeys<TKey, TValue>(this IDictionary<TKey, TValue> dic, IEnumerable<TKey> keys)
         {
             foreach (var key in keys)

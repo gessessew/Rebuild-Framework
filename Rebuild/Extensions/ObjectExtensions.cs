@@ -96,32 +96,50 @@ namespace Rebuild.Extensions
             return comparer.Equals(s, s0) || comparer.Equals(s, s1);
         }
 
-        public static TValue IfNotNull<T, TValue>(this T obj, Func<T, TValue> selector, TValue defaultValue = default(TValue))
+        /// <summary>
+        /// Returns the result of the selector Func if the value is not null, otherwise returns the default value.
+        /// </summary>
+        public static TValue IfNotNull<T, TValue>(this T value, Func<T, TValue> selector, TValue defaultValue = default(TValue))
         {
-            return obj == null ? defaultValue : selector(obj);
+            return value == null ? defaultValue : selector(value);
         }
 
-        public static TValue IfNotNull<T, TValue>(this T obj, Func<T, TValue> selector, Func<TValue> selectorIfNull)
+        /// <summary>
+        /// Returns the result of the selector Func if the value is not null, otherwise returns the result of the selectorIfNull Func.
+        /// </summary>
+        public static TValue IfNotNull<T, TValue>(this T value, Func<T, TValue> selector, Func<TValue> selectorIfNull)
         {
-            return obj == null ? selectorIfNull() : selector(obj);
+            return value == null ? selectorIfNull() : selector(value);
         }
 
-        public static T IfNull<T>(this T obj, Func<T> provider)
+        /// <summary>
+        /// Returns the result of the provider Func if the value is null, otherwise returns the value.
+        /// </summary>
+        public static T IfNull<T>(this T value, Func<T> provider)
         {
-            return obj == null ? provider() : obj;
+            return value == null ? provider() : value;
         }
 
-        public static T IfNull<T>(this T obj, T defaultValue = default(T))
+        /// <summary>
+        /// Returns the a default value if the value is null, otherwise returns the value.
+        /// </summary>
+        public static T IfNull<T>(this T value, T defaultValue = default(T))
         {
-            return obj == null ? defaultValue : obj;
+            return value == null ? defaultValue : value;
         }
 
+        /// <summary>
+        /// Invokes the action passing the value as parameter and returns the value.
+        /// </summary>
         public static T With<T>(this T value, Action<T> action)
         {
             action(value);
             return value;
         }
 
+        /// <summary>
+        /// Invokes the action if the value is not null returns the value.
+        /// </summary>
         public static T WithIfNotNull<T>(this T value, Action<T> action)
         {
             if (value != null)

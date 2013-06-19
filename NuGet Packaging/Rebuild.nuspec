@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Rebuild-Framework</id>
-        <version>0.6.6</version>
+        <version>0.6.7</version>
         <title>Rebuild Framework</title>
         <authors>Rebuild</authors>
         <owners />
@@ -10,19 +10,24 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Extensions Methods and Helpers</description>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="3.5.8" />
+            <dependency id="Newtonsoft.Json" version="5.0.5" />
         </dependencies>
     </metadata>
     <files>
         <file src="..\Rebuild.NetFx\Bin\Release\Rebuild.dll" target="lib\net40\Rebuild.dll" />
         <file src="..\Rebuild.NetFx\Bin\Release\Rebuild.pdb" target="lib\net40\Rebuild.pdb" />
+        <!--<file src="..\Rebuild.NetFx\Bin\Release\Rebuild.xml" target="lib\net40\Rebuild.xml" />-->
         <file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\portable-sl4+wp75+windows8+net40\Rebuild.dll" />
         <file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\portable-sl4+wp75+windows8+net40\Rebuild.pdb" />
+        <!--<file src="..\Rebuild.NetFx\Bin\Release\Rebuild.xml" target="lib\portable-sl4+wp75+windows8+net40\Rebuild.xml" />-->
         <file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\sl4\Rebuild.dll" />
         <file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\sl4\Rebuild.pdb" />
+        <!--<file src="..\Rebuild.NetFx\Bin\Release\Rebuild.xml" target="lib\sl4\Rebuild.xml" />-->
         <file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\windows8\Rebuild.dll" />
         <file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\windows8\Rebuild.pdb" />
+        <!--<file src="..\Rebuild.NetFx\Bin\Release\Rebuild.xml" target="lib\windows8\Rebuild.xml" />-->
         <file src="..\Rebuild\Bin\Release\Rebuild.dll" target="lib\wp75\Rebuild.dll" />
         <file src="..\Rebuild\Bin\Release\Rebuild.pdb" target="lib\wp75\Rebuild.pdb" />
+        <!--<file src="..\Rebuild.NetFx\Bin\Release\Rebuild.xml" target="lib\wp75\Rebuild.xml" />-->
     </files>
 </package>

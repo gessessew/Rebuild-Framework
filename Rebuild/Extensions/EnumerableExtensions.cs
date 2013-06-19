@@ -7,6 +7,9 @@ namespace Rebuild.Extensions
 {
     public static partial class EnumerableExtensions
     {
+        /// <summary>
+        /// Add a sequence to a collection.
+        /// </summary>
         public static AddToResult<T, TCollection> AddTo<T, TCollection>(this IEnumerable<T> items, TCollection collection) where TCollection : ICollection<T>
         {
             var array = items.ToArray();
@@ -137,6 +140,19 @@ namespace Rebuild.Extensions
             return false;
         }
 
+        public static IEnumerable<T> Distinct<T, TKey>(this IEnumerable<T> items, Func<T, TKey> keySelector, IEqualityComparer<TKey> comparer = null)
+        {
+            var dic = new Dictionary<TKey, bool>(comparer);
+            
+            foreach(var item in items)
+            {
+                if (dic.AddIfNotExists(keySelector(item), true).IsAdded)
+                {
+                    yield return item;
+                }
+            }
+        }
+
         public static IEnumerable<T> Do<T>(this IEnumerable<T> items, Action<T> action)
         {
             foreach (var item in items)
@@ -156,19 +172,6 @@ namespace Rebuild.Extensions
                 }
 
                 yield return item;
-            }
-        }
-
-        public static IEnumerable<T> Distinct<T, TKey>(this IEnumerable<T> items, Func<T, TKey> keySelector, IEqualityComparer<TKey> comparer = null)
-        {
-            var dic = new Dictionary<TKey, bool>(comparer);
-            
-            foreach(var item in items)
-            {
-                if (dic.AddIfNotExists(keySelector(item), true).IsAdded)
-                {
-                    yield return item;
-                }
             }
         }
 

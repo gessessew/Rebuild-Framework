@@ -62,6 +62,8 @@
     <Compile Include="Extensions\Int32ExtensionsTests.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensionsTests.cs" />
+    <Compile Include="Extensions\QueueExtensionsTests.cs" />
+    <Compile Include="Extensions\StackExtensionsTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\MemoizerTests.cs" />
