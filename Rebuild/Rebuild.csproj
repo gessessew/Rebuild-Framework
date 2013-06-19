@@ -76,6 +76,7 @@
     <Compile Include="Utils\Doubles.cs" />
     <Compile Include="Utils\MemoizeBuilder.cs" />
     <Compile Include="Utils\Memoizer.cs" />
+    <Compile Include="Xml\XAttributes.cs" />
     <Compile Include="Xml\XmlNs.cs" />
     <Compile Include="Xml\XNamespaces.cs" />
   </ItemGroup>
