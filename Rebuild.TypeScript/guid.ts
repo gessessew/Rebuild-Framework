@@ -5,12 +5,12 @@ class Guid {
         this.id = id.toLowerCase();
     }
     static empty() {
-        return emptyGuid;
+        return Guid.emptyGuid;
     }
     static newGuid() {
         return new Guid(
-            s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4()
+            Guid.s4() + Guid.s4() + '-' + Guid.s4() + '-' + Guid.s4() + '-' +
+            Guid.s4() + '-' + Guid.s4() + Guid.s4() + Guid.s4()
         );
     }
     static regex(format?: string) {
