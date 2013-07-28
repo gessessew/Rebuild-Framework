@@ -7,7 +7,7 @@
     <ProjectGuid>{9F1A8C7D-69B4-4633-AB4E-F5031B2E518F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rebuild.NetFx.Rx</RootNamespace>
+    <RootNamespace>Rebuild.Rx</RootNamespace>
     <AssemblyName>Rebuild.NetFx.Rx</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -56,7 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ObservableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunnableScheduler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
