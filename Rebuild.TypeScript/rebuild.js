@@ -3,7 +3,6 @@ var rb;
     (function (CalendarWeekRule) {
         CalendarWeekRule[CalendarWeekRule["firstDay"] = 0] = "firstDay";
         CalendarWeekRule[CalendarWeekRule["firstFullWeek"] = 1] = "firstFullWeek";
-
         CalendarWeekRule[CalendarWeekRule["firstFourDayWeek"] = 2] = "firstFourDayWeek";
     })(rb.CalendarWeekRule || (rb.CalendarWeekRule = {}));
     var CalendarWeekRule = rb.CalendarWeekRule;
@@ -15,7 +14,6 @@ var rb;
         DayOfWeek[DayOfWeek["wednesday"] = 3] = "wednesday";
         DayOfWeek[DayOfWeek["thursday"] = 4] = "thursday";
         DayOfWeek[DayOfWeek["friday"] = 5] = "friday";
-
         DayOfWeek[DayOfWeek["saturday"] = 6] = "saturday";
     })(rb.DayOfWeek || (rb.DayOfWeek = {}));
     var DayOfWeek = rb.DayOfWeek;

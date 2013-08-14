@@ -147,6 +147,9 @@
     <Compile Include="..\Rebuild\IO\WrappedStream.cs">
       <Link>IO\WrappedStream.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Utils\Age.cs">
+      <Link>Utils\Age.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\Utils\DateTimes.cs">
       <Link>Utils\DateTimes.cs</Link>
     </Compile>

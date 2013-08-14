@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rebuild.Utils;
 using System;
 
 namespace Rebuild.Extensions
@@ -12,7 +13,7 @@ namespace Rebuild.Extensions
             new DateTime(2000, 1, 1)
                 .DateTimeOffsetUtc()
                 .Age(new DateTime(2010, 1, 1).DateTimeOffsetUtc())
-                .AssertEqual(new DateTime(10, 1, 1));
+                .AssertEqual(new Age(10));
         }
 
         [TestMethod]
