@@ -156,6 +156,9 @@
     <Compile Include="..\Rebuild\Utils\Doubles.cs">
       <Link>Utils\Doubles.cs</Link>
     </Compile>
+    <Compile Include="..\Rebuild\Utils\GeoLocation.cs">
+      <Link>Utils\GeoLocation.cs</Link>
+    </Compile>
     <Compile Include="..\Rebuild\Utils\MemoizeBuilder.cs">
       <Link>Utils\MemoizeBuilder.cs</Link>
     </Compile>

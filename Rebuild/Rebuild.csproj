@@ -75,6 +75,7 @@
     <Compile Include="Utils\Age.cs" />
     <Compile Include="Utils\DateTimes.cs" />
     <Compile Include="Utils\Doubles.cs" />
+    <Compile Include="Utils\GeoLocation.cs" />
     <Compile Include="Utils\MemoizeBuilder.cs" />
     <Compile Include="Utils\Memoizer.cs" />
     <Compile Include="Xml\XAttributes.cs" />

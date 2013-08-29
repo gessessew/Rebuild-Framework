@@ -19,9 +19,19 @@ namespace Rebuild.Extensions
             return Math.Max(value, minValue);
         }
 
+        public static double DegreeToRadian(this double angle)
+        {
+           return Math.PI * angle / 180.0;
+        }
+
         public static bool IsAlmostEqualsTo(this double d, double compareValue, double epsilon = double.Epsilon)
         {
             return Math.Abs(d - compareValue) <= epsilon;
+        }
+
+        public static double RadianToDegree(this double angle)
+        {
+            return angle * 180.0 / Math.PI;
         }
     }
 }
