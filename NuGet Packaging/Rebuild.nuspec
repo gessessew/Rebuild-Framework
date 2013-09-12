@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Rebuild-Framework</id>
-        <version>0.6.9</version>
+        <version>0.7.0</version>
         <title>Rebuild Framework</title>
         <authors>Rebuild</authors>
         <owners />
@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Extensions Methods and Helpers</description>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="5.0.5" />
+            <dependency id="Newtonsoft.Json" version="5.0.6" />
         </dependencies>
     </metadata>
     <files>

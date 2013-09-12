@@ -47,14 +47,15 @@ namespace Rebuild.Extensions
 
             foreach (var item in items)
             {
-                list.Add(item);
-
-                if (splitPredicate(item, list))
+                if (splitPredicate(item, list) && list.Count != 0)
                 {
                     var array = list.ToArray();
                     list.Clear();
                     yield return array;
                 }
+
+
+                list.Add(item);
             }
 
             if (list.Count != 0)

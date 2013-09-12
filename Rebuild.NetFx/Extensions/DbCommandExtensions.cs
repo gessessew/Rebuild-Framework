@@ -65,7 +65,7 @@ namespace Rebuild.Extensions
 
         public static IDbCommand SetParameter(this IDbCommand command, string parameterName, object value)
         {
-            var parameter = (IDbDataParameter)command.Parameters[parameterName];
+            var parameter = command.Parameters.Contains(parameterName) ? (IDbDataParameter)command.Parameters[parameterName] : null;
 
             if (parameter == null)
             {
