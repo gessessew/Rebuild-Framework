@@ -42,12 +42,40 @@ namespace Rebuild.Extensions
 
         public static DateTime GetDateTimeOrDefault(this IDataReader reader, int i, DateTime defaultValue = default(DateTime))
         {
-            return reader.IsDBNull(i) ? defaultValue : reader.GetDateTime(i);
+            try
+            {
+                return reader.IsDBNull(i) ? defaultValue : reader.GetDateTime(i);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Source == "MySql.Data"
+                    && ex.GetType().FullName == "MySql.Data.Types.MySqlConversionException"
+                    && reader.GetFieldType(i) == typeof(DateTime))
+                {
+                    return defaultValue;
+                }
+
+                throw ex;
+            }
         }
 
         public static DateTime? GetDateTimeOrDefault(this IDataReader reader, int i, DateTime? defaultValue = null)
         {
-            return reader.IsDBNull(i) ? defaultValue : reader.GetDateTime(i);
+            try
+            {
+                return reader.IsDBNull(i) ? defaultValue : reader.GetDateTime(i);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Source == "MySql.Data" 
+                    && ex.GetType().FullName == "MySql.Data.Types.MySqlConversionException"
+                    && reader.GetFieldType(i) == typeof(DateTime))
+                {
+                    return defaultValue;
+                }
+
+                throw ex;
+            }
         }
 
         public static decimal GetDecimalOrDefault(this IDataReader reader, int i, decimal defaultValue = 0)
