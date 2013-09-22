@@ -176,6 +176,32 @@ namespace Rebuild.Extensions
             }
         }
 
+        public static IEnumerable<T> DoOnFirst<T>(this IEnumerable<T> items, Action<T> action)
+        {
+            var first = true;
+
+            foreach (var item in items)
+            {
+                if (first)
+                {
+                    action(item);
+                    first = false;
+                }
+                yield return item;
+            }
+        }
+
+        public static IEnumerable<T> DoWhile<T>(this IEnumerable<T> items, Func<T, bool> func)
+        {
+            var shouldDo = true;
+
+            foreach (var item in items)
+            {
+                shouldDo &= func(item);
+                yield return item;
+            }
+        }
+
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> items)
         {
             return items ?? Enumerable.Empty<T>();
